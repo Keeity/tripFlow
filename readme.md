@@ -1,4 +1,4 @@
-# TRIP FLOW
+# TRIP FLOW - Plataforma de Turismo Sustentável
 
 ## Sobre a construção da API
 
