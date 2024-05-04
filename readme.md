@@ -1,4 +1,4 @@
-### TRIP FLOW
+# TRIP FLOW
 
 ## API desenvolvida em Node.js
 Neste projeto, foi desenvolvida uma plataforma para promover viagens sustentáveis e experiências
@@ -18,28 +18,16 @@ Em resumo, este projeto é uma solução simples e eficiente para a criação de
 
 ## Configurar o repositório:
 
-   ## Para iniciar o repositório local:
+   ## Se quiser iniciar o repositório local:
    1. Cria uma pasta local e abre no VsCode
-   2. Para iniciar novo projeto e criar package.json: `npm init` ou, se quiser responder sim a tudo, `npm init --y`
-   3. Iniciar novo repositório local: `git init`
+   2. Iniciar novo repositório local: `git init`
 
-   ## Para copiar ou conectar ao repositório remoto:
-   1. Copiar: `git clone <url>`
-   2. Criar conexão: `Git remote add origin <url>`
-   3. Para denominar main a branch principal: `git branch -M main`
-   4. Encaminhar o primeiro push à main: `git push -u origin main`
-
-   ## GITFLOW
-   1. Criação da develop: `git checkout -b develop main`
-   2. Publica após fazer commit: `git push origin develop`
-   3. Criação das features: `git checkout -b feature/x`
-   4. Publica após fazer commit: `git push origin feature/x`
-   5. Cria PullRequest no GitHub
-   6. Após mesclar as branches, puxar alterações na develop: `git checkout develop` e `git pull origin develop` 
+   ## Para copiar o repositório remoto:
+   1. Copiar: `git clone https://github.com/Keeity/tripFlow`
 
 ## Rodar o repositório:
 
-   ### Para começar a utilizar, é necessário instalar as dependencias:
+   ### Para começar a utilizar, é necessário instalar as dependencias (node_modules):
    1. `npm install`
    2. Se for em ambiente local: `npm install --dev`
    3. Criar arquivo `.env` com base no arquivo `.env_example`
