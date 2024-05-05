@@ -5,15 +5,15 @@
    ### Apresentação da API TRIP FLOW 
    Trata-se de uma plataforma para promover viagens sustentáveis e experiências positivas para os usuários, fornecendo acesso a informações sobre destinos turísticos, praias, atrações naturais e atividades recreativas.
 
-    Os usuários podem explorar e descobrir novos destinos, encontrar dicas de viagem sustentável, compartilhar suas experiências e avaliações, inclusive quanto à acessibilidade e coleta de lixo seletiva.
+ Os usuários podem explorar e descobrir novos destinos, encontrar dicas de viagem sustentável, compartilhar suas experiências e avaliações, inclusive quanto à acessibilidade e coleta de lixo seletiva.
  
-    Assim, o usuário terá como guardar todos os locais visitados e avaliados, para poder acessá-las futuramente e até mesmo compartilhar experiências com amigos.
+Assim, o usuário terá como guardar todos os locais visitados e avaliados, para poder acessá-las futuramente e até mesmo compartilhar experiências com amigos.
 
-    As funcionalidades incluem o cadastro de novos usuários, listagem, edição e seleção de destinos, visualização de informações dos destinos, entre outras.
+As funcionalidades incluem o cadastro de novos usuários, listagem, edição e seleção de destinos, visualização de informações dos destinos, entre outras.
 
-   Este projeto é uma solução simples e eficiente voltada ao turismo sustentável para facilitar a criação de roteiros de viagens e compartilhamento de experiências entre os viajantes.
+Este projeto é uma solução simples e eficiente voltada ao turismo sustentável para facilitar a criação de roteiros de viagens e compartilhamento de experiências entre os viajantes.
 
-   Este é apenas o MVP, sendo que a proposta final da API busca atender à dificuldade dos usuários em planejar viagens a partir de uma plataforma que traga roteiros individualizados de viagem, incluindo atrações turísticas, hoteis e restaurantes, a partir das seleções feitas pelos usuários e considerando as avaliações dos demais usuários.
+Este é apenas o MVP, sendo que a proposta final da API busca atender à dificuldade dos usuários em planejar viagens a partir de uma plataforma que traga roteiros individualizados de viagem, incluindo atrações turísticas, hoteis e restaurantes, a partir das seleções feitas pelos usuários e considerando as avaliações dos demais usuários.
 
    ### API desenvolvida em Node.js 
    O projeto de backend desta API Rest foi construído com a linguagem de programação JavaScript, com utilização do ambiente de execução Node.js e do framework Express. A ORM escolhida foi o Sequelize, para facilitar e dar segurança ao relacionamento com o banco de dados PostgreSQL. 
@@ -42,14 +42,14 @@
 ## Variáveis de ambiente
    1. Criar arquivo `.env` com base no arquivo `.env_example`
    2. Preencher:
-        DIALECT=`dialeto do banco de dados utilizado`. Exemplo: `postgres`
-        HOST: `endereço do host do seu banco de dados`. Exemplo: `localhost`
-        USERNAMEDB: `nome de usuário usado para se conectar ao seu banco de dados`. Exemplo: `postgres`
-        PASSWORDDB: `senha usada para se conectar ao seu banco de dados`. Exemplo: `senha`
-        DATABASE: `nome do banco de dados ao qual você deseja se conectar`. Preencher com `viagem365`.
-        PORT: `porta na qual o seu banco de dados está escutando`. Exemplo: `5432`
-        PORT_API: `porta na qual a API estará rodando`. Exemplo: `3000`.
-        SECRET_WJT=`palavra chave escolhida para utilizar o jwt`. Exemplo: `senha`
+        * DIALECT=`dialeto do banco de dados utilizado`. Exemplo: `postgres`
+        * HOST: `endereço do host do seu banco de dados`. Exemplo: `localhost`
+        * USERNAMEDB: `nome de usuário usado para se conectar ao seu banco de dados`. Exemplo: `postgres`
+        * PASSWORDDB: `senha usada para se conectar ao seu banco de dados`. Exemplo: `senha`
+        * DATABASE: `nome do banco de dados ao qual você deseja se conectar`. Preencher com `viagem365`.
+        * PORT: `porta na qual o seu banco de dados está escutando`. Exemplo: `5432`
+        * PORT_API: `porta na qual a API estará rodando`. Exemplo: `3000`.
+        * SECRET_WJT=`palavra chave escolhida para utilizar o jwt`. Exemplo: `senha`
 
 ## Criar tabelas e Rodar o repositório:
 
@@ -67,20 +67,10 @@
    1. Opção nº 1: `sequelize db:migrate`
    2. Opção nº 2: `npx sequelize db:migrate`
 
-   ### Reverter a última migration:
-   1. Opção nº 1: `sequelize-cli db:migrate:undo`
-   2. Opção nº 2: `npx sequelize-cli db:migrate:undo`
-
-## Criar valores com o Seeders
-
    ### Incluir valores iniciais no banco de dados. Opções:
    1. Opção nº 1: `sequelize db:seed:all`
    2. Opção nº 2: `npx sequelize db:seed:all`
-
-   ### Incluir valores iniciais no banco de dados. Opções:
-   1. Opção nº 1: `sequelize-cli db:seed:undo`
-   2. Opção nº 2: `npx sequelize-cli db:seed:undo`
-
+   
 ## Rodar o repositório:
 
    ### Para rodar o repositório em ambiente local
