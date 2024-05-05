@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize') 
+const { Model, DataTypes, Sequelize } = require('sequelize') 
 const { connection } = require('../database/connection')
 
 const User = connection.define('users', { 
@@ -50,11 +50,17 @@ const User = connection.define('users', {
             allowNull: true,
              }, 
        role: {
-           type: Sequelize.ENUM,
+           type: DataTypes.ENUM,
             values: ['admin', 'user', 'premiumUser'],
             allowNull: false,
-           defaultValue: 'user'
-        },
+           defaultValue: 'user',
+           validate: {
+            isIn: {
+                args: [['admin', 'user', 'premiumUser']],
+                msg: "O papel especificado não é válido"
+            }
+        }
+      },
 }
 ,{paranoid: true}
 
