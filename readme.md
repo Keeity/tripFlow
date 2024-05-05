@@ -2,10 +2,10 @@
 
 ## Sobre a construção da API
 
-   ### Apresentação da API TRIP FLOW 
-   Trata-se de uma plataforma para promover viagens sustentáveis e experiências positivas para os usuários, fornecendo acesso a informações sobre destinos turísticos, praias, atrações naturais e atividades recreativas.
+### Apresentação da API TRIP FLOW 
+Trata-se de uma plataforma para promover viagens sustentáveis e experiências positivas para os usuários, fornecendo acesso a informações sobre destinos turísticos, praias, atrações naturais e atividades recreativas.
 
- Os usuários podem explorar e descobrir novos destinos, encontrar dicas de viagem sustentável, compartilhar suas experiências e avaliações, inclusive quanto à acessibilidade e coleta de lixo seletiva.
+Os usuários podem explorar e descobrir novos destinos, encontrar dicas de viagem sustentável, compartilhar suas experiências e avaliações, inclusive quanto à acessibilidade e coleta de lixo seletiva.
  
 Assim, o usuário terá como guardar todos os locais visitados e avaliados, para poder acessá-las futuramente e até mesmo compartilhar experiências com amigos.
 
@@ -99,5 +99,3 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
    ### Vídeo apresentando a API
    `lll`
 
- ### Draw.io
- `https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tripflow.drawio#R7Ztdc%2BMmFIZ%2FjS%2B3Y0mW41zWbtKPTdqdzc6mvcTiWGYWgQZhO86v70FClhWcNJ2W0gtmPBNzQBh4XhB6iSbZqnr6UZF6ey8p8Ek6pU%2BT7IdJmiazfIp%2FTOTYRfKFDZSK0S50Fnhgz2Cv7KM7RqGxsS6kpeSa1eNgIYWAQo9iRCl5GBfbSE5HgZqUMGqGCTwUhINT7JFRve2ii%2FRqiP8ErNz2v5zMr7ucivSFbcXNllB5OAtlN5NspaTU3bfqaQXcDN54XG5fyT01TIHQ77ng93qVfPz6%2BMtyKu8%2B6ls%2B%2F%2BNWfLC17Anf2Q7vGlCNbbE%2B9sPQHFjFicDUciOFfrA5U0wXW8bpHTnKnWlGo0nxrU8tt1KxZyxPOGYlGMBspS3ldD4q8WCutHUqaLDMp75vyYvQPXkaFbwjje5bIzkndcPWbfvMhRVRJRNLqbWsbCHCWSnwe4F1ger71LUqmZk043wluVRt7zOaw4LO2uYr%2BQ3OchbpOpubfthxBKXh6VVAyQk7zheQFWh1xCL2gg%2B5lc5pqnTJw6C7ZG7FtD3TXJbPrd6t1stT1YMc8ItVxN9QR3rtyAPLv9QG9lg7YyNkJ5azgbShpiYFE%2BUdbEz7Z0Pks%2B2SCUkcyQ1vp8uWUQrCsJaaaLI%2BCa%2BWTOi2y%2FkSPzgyq%2Bl3%2BSTHNq0wnQxp%2FJjiSq%2BkwGYS1gIBVM0BjHJG%2FJHQ8rBlGh6wWSZywJXNKFVXvYrfBfv1%2BeYqwBJP5%2B8kPvUF3OEtSAWRuDfieWjimUO8BEFxUYzMfTFfhGburupFvYnAvQHHTWFg4v1u%2Bhw51BG5P%2BSz4MjdlZ1Qivtld3Mfsf9r2K%2BCY3ef6Cz2X3fVOt7Xfe7ep8Hhu%2Ft3C38lq5pDZboXBeBNAFlwAcwcAUBFGI%2FQPT6zB4eeO9Br0jQHqaJX45H7dWju7lxXkkezxh%2FyLLg%2F5870ppY62vUv7HoCi03haB5z5sUC1pv3SuRtuz6b2jOg3tZ5nzZmV77c%2Bsx9yI9u%2FT9aDvK%2FuPMHXg3mDu%2Fo1nslHtytv3KIU2gKxWrNpIjgvYEPbtknC4d8NHB9Ev8fePbu8h4NXO%2FYg%2Fv22au%2BffTw%2FgsBhHfw3eNZrLs0%2F17HipWUijJBNMRVwOPOPryT7%2B70CoReSlt35O6Fe3ADP71wglPg2v%2FlWMcHO5%2BP8sHBX7rt77FPOwV3sId4hOORfnArP3W9%2FEI2cZ%2Fnj3l4Lz91n%2B8U3uIjc3%2FMg%2Ft3qbutI4W5v7M140zHvZ1H%2BME9vPTC6R1wKDTbwyOOl%2BHbJqOV61EHs%2BDGnmvlmneufqYRuj%2Fo4W0998HO4Q20hP6oHnuL94PPwIlZD26GHGdIz4YPBP3evPOIyZvPz6DkF3lPxHFiD%2FKHvIoI%2BlsrGiV3ggK15M%2FP%2BxddhTaVY6rYqX1bdEBlmvwqKBtq5E4V8NbCaB0v%2FPES3oK8uAz5HOr0AtRTULXDuR%2B3%2BBJq%2BxufzESYnE78r%2B0C3t9RZtfjGrqO2osGvTj1JC8qSl9W1A2EU1ErvFO%2FL2kRk8MLpV3x4bXc7OZP`
