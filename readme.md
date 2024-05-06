@@ -76,11 +76,21 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
    ### Para rodar o repositório em ambiente local
    1. `npm run start`
 
+## Para testar a API TripFlow
 
-## Documentações:
+  ### Para conseguir acessar todas as rotas como administrador, utilizar para login:
+   * email: `keeity@example.com`
+   *  password: `ytieek`
+
+   ### As rotas disponíveis para manipular a tabela Users são as seguintes:
+
+   ### As rotas disponíveis para manipular a tabela Users são as seguintes:
+
 
    ### Documentação da API TripFlow:
    Se a porta da API for 3000: `http://localhost:3000/docs`
+
+## Outras Documentações Úteis:
 
    ### Documentação do Sequelize: 
    `https://sequelize.org/docs/v6/core-concepts/model-basics/`

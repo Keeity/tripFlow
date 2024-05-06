@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize') 
 const { connection } = require('../database/connection')
+const { hash } = require('bcryptjs')
 
 const User = connection.define('users', { 
     name: {
@@ -65,5 +66,12 @@ const User = connection.define('users', {
 ,{paranoid: true}
 
 )
+User.beforeSave(async (user) => {  
+  user.password = await hash(user.password, 8)
+  })  
+
+User.beforeUpdate(async (user) => {  
+  user.password = await hash(user.password, 8)
+  })  
 
 module.exports = User

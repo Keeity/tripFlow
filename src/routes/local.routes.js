@@ -1,5 +1,5 @@
 const {Router, query} = require('express');
-const { auth } = require('../middleware/auth');
+const { auth } = require('../middlewares/auth');
 const LocalController = require('../controllers/LocalController');
 
 const localRoutes = new Router; 

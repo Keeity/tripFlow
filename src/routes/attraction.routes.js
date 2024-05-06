@@ -1,5 +1,5 @@
 const {Router, query} = require('express');
-const { auth } = require('../middleware/auth');
+const { auth } = require('../middlewares/auth');
 const AttractionController = require('../controllers/AttractionController');
 const role = require('../middlewares/role');
 
@@ -12,10 +12,10 @@ attractionRoutes.post('/',auth, role.isAdmin, AttractionController.register)
 attractionRoutes.get('/', auth, role.isPremiumOrAdmin, AttractionController.list)
 
 //attraction - listar atrações cadastradas em busca por nome
-attractionRoutes.get('/busca', auth, role.isPremiumOrAdmin, AttractionController.list)
+attractionRoutes.get('/filter', auth, role.isPremiumOrAdmin, AttractionController.listByFilter)
 
 //attraction - listar atrações por id
-attractionRoutes.get('/:id', auth, role.isPremiumOrAdmin, AttractionController.list)
+attractionRoutes.get('/:id', auth, role.isPremiumOrAdmin, AttractionController.listById)
 
 //attraction - alterar qualquer atração
 attractionRoutes.put('/:id', auth, role.isAdmin, AttractionController.update)
