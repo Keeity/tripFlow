@@ -14,6 +14,9 @@ userRoutes.post('/', UserController.userRegister)
 //usuario - alterar o próprio cadastro
 userRoutes.put('/', auth, UserController.userUpdate)
 
+//usuario - ver seu próprio cadastro
+// userRoutes.get('/', auth, UserController.viewRegister)
+
 //usuario - reativar cadastro excluído
 userRoutes.put('/reactivate', UserController.reactivate)
 
@@ -21,10 +24,10 @@ userRoutes.put('/reactivate', UserController.reactivate)
 userRoutes.delete('/', auth, UserController.userDelete) 
 
 //usuario - listar todos - admin
-userRoutes.get('/', auth, checkRole('admin'), UserController.usersList)
+userRoutes.get('/admin', auth, checkRole('admin'), UserController.usersList)
 
 //usuario - listar por id - admin
-userRoutes.get('/:id', auth, checkRole('admin'), UserController.listUsersById)
+userRoutes.get('/admin:id', auth, checkRole('admin'), UserController.listUsersById)
 
 //usuario - listar por busca
 // userRoutes.get('/filter', auth, checkRole('admin'), UserController.listByFilter)
@@ -36,35 +39,3 @@ userRoutes.put('/admin/:id', auth, checkRole('admin'), UserController.update)
 userRoutes.delete('/admin/:id', auth, checkRole('admin'), UserController.usersDelete) 
 
 module.exports = userRoutes 
-
-// const userRoutes = new Router; 
-
-// //usuario - Fazer Login
-// userRoutes.post('/login', UserController.login)
-
-// //usuario - cadastro
-// userRoutes.post('/', UserController.register)
-
-// //usuario - alterar o próprio cadastro
-// userRoutes.put('/:id', auth, UserController.update)
-// //próprio
-
-// //usuario - excluir o próprio cadastro
-// userRoutes.delete('/:id', auth, UserController.delete) 
-
-// //usuario - listar todos - admin
-// userRoutes.get('/', auth, UserController.list)
-
-// //usuario - listar por id - admin
-// userRoutes.get('/:id', auth, role.isAdmin, UserController.listById)
-
-// //usuario - listar por busca
-// userRoutes.get('/filter', auth, role.isAdmin, UserController.listByFilter)
-
-// //usuario - alterar qualquer cadastro - admin
-// userRoutes.put('/admin/:id', auth, role.isAdmin, UserController.adminUpdate)
-
-// //usuario - excluir qualquer cadastro - admin
-// userRoutes.delete('/admin/:id', role.isAdmin, UserController.adminDelete) 
-
-// module.exports = userRoutes 

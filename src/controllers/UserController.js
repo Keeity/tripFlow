@@ -6,7 +6,7 @@ const { compare, hash } = require("bcryptjs")
 const {Router} = require('express');
 const axios = require('axios');
 const { auth } = require('../middlewares/auth');
-
+const Attraction = require('../models/Attraction');
 
 class UserController {
 
@@ -65,6 +65,10 @@ async userRegister(req,res) {
           return res.status(400).json({ message: 'O nome completo é obrigatório!' });
         }
     
+        if (!(password.length >= 6)) {
+          return res.status(400).json({ message: 'O password tem que ter pelo menos 6 caracteres!' });
+        }
+
         if (!(birthDate.match(/\d{4}-\d{2}-\d{2}/gm))) {
           return res.status(400).json({ message: 'A data de nascimento não está no formato correto ("aaaa-mm-dd")!' });
         }
@@ -113,6 +117,20 @@ async userRegister(req,res) {
         res.status(500).json({ error: 'Não foi possível cadastrar o usuário' });
       }
     }
+
+
+//usuario - ver seu próprio cadastro
+async viewRegister (req, res) {
+  try {
+    const id = req.payload.sub
+    const user = await User.findByPk(id)
+          res.json(user)
+      }
+  catch (error) {
+    console.error(`Erro ao visualizar cadastro: ${error}`)
+    return res.status(500).json({error: 'Erro interno do servidor'})
+  }
+}
 
 //usuario - alterar o próprio cadastro
 async userUpdate (req,res) { 
@@ -352,11 +370,20 @@ try {
 //usuario - excluir qualquer cadastro - admin
 async usersDelete(req,res) { 
 try{
-    const { id } = req.params; 
+  const { id } = req.params; 
    const user = await User.findByPk(id);
+   const attractions = await Attraction.findAll({
+    where: { user_id: id }
+  });
+
    if(!user) {
     return res.status(404).json({error:`Usuário ID ${id} não encontrado.`})
      }
+
+     if(attractions.length > 0) {
+      return res.status(404).json({error:`Não foi possível excluir, pois usuário id ${id} possui atrações cadastradas.`})
+       }
+  
    await user.destroy() 
     res.status(200).json({message: `Usuário ID ${id} excluído com sucesso!`})
 } catch (error) {
