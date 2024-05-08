@@ -4,7 +4,6 @@ const {Router} = require('express');
 const axios = require('axios')
 const User = require("../models/User");
 
-
 class AttractionController {
 
 
@@ -20,7 +19,7 @@ async register(req,res) {
        
 
         if (!(name && description && visitDate && cep && address 
-            && latitude && longitude && attractionCategory && visibility)) {
+            && latitude && longitude && attractionCategory)) {
           return res.status(400).json({ message: 'Faltou indicar um campo obrigatório!' });
         }
     
@@ -167,17 +166,18 @@ async delete(req,res) {
     try{
         const { id } = req.params; 
        const attraction = await Attraction.findByPk(id);
-       if(!attraction) {
+      if(!attraction) {
         return res.status(404).json({error:`Atração Turística ID ${id} não encontrada.`})
          }
        await attraction.destroy() 
-        res.status(204)
+       res.status(200).json({message: `Atração Turística ID ${id} excluída com sucesso!`})
     } catch (error) {
         console.error(`Erro ao tentar excluir: ${error}`);
         return res.status(500).json({error: 'Erro interno do servidor'});
       }
     }
     
+
     }
 
 module.exports = new AttractionController()

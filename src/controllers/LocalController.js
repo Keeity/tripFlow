@@ -9,17 +9,18 @@ class LocalController {
 // local - cadastro de atração privada
 //falta puxar coordenadas e CEP, falta onferir se ele puxa o payload...
 async register(req,res) {
-    try {
+
+     try {
         const { name, description, visitDate, cep, addressNumber,attractionCategory, 
                 adventureLevel, cost, rate, accessibility, selectiveWasteCollection } = req.body;
         
         const { address, latitude, longitude } = req.body //arrumar
         
         const id = req.payload.sub
-       
+        const user = await User.findByPk(id)
 
         if (!(name && description && visitDate && cep && address 
-            && latitude && longitude && attractionCategory && visibility)) {
+            && latitude && longitude && attractionCategory)) {
           return res.status(400).json({ message: 'Faltou indicar um campo obrigatório!' });
         }
     
@@ -50,7 +51,7 @@ async register(req,res) {
           rate,
           accessibility,
           selectiveWasteCollection,
-          userId: id,
+          user_id: id,
           visibility: 'private'
         });
     
@@ -64,9 +65,9 @@ async register(req,res) {
 // //local - listar todas as atrações privadas criadas pelo usuario
 async list (req, res) {
     try {
-        const user_id = req.payload.sub
+        const userId = req.payload.sub
         const attractions = await Attraction.findAll({
-            where: { userId: user_id }
+            where: { user_id: userId }
           });
      if (attractions.length > 0) {
             console.log("Listando atrações turísticas cadastradas pelo usuário.");
@@ -86,11 +87,11 @@ async list (req, res) {
 async listById (req,res) {
     try {
     const { id } = req.params
-    const userId = req.payload.sub
+    const user_id = req.payload.sub
     const attraction = await Attraction.findOne({
             where: { 
                 id,
-                userId
+                user_id
           }
         });
       if(!attraction) {
@@ -115,14 +116,17 @@ async update (req,res) {
                selectiveWasteCollection} = req.body
         const attraction = await Attraction.findOne({
                 where: { 
-                    id,
-                    userId
-              }
+                    id  }
             });
      
     if(!attraction){
-       return res.status(404).json({error: 'Atração Turística não cadastrada pelo usuário.'})
+       return res.status(404).json({error: 'Atração Turística não encontrada.'})
      }
+
+     if(!(attraction.user_id ===userId)) {
+      return res.status(404).json({error: 'Atração Turística não cadastrada pelo usuário.'})
+     }
+
        name && (attraction.name = name);
        description && (attraction.description = description);
        visitDate && (attraction.visitDate = visitDate);
@@ -152,13 +156,18 @@ try{
     const userId = req.payload.sub
     const attraction = await Attraction.findOne({
             where: { 
-                id,
-                userId
+                id
           }
         });
-        if (!attraction) {
-            return res.status(404).json({ error: 'Atração Turística não encontrada ou não cadstrada pelo usuário.' });
-          }
+
+        if(!attraction){
+          return res.status(404).json({error: 'Atração Turística não encontrada.'})
+        }
+   
+        if(!(attraction.user_id ===userId)) {
+         return res.status(404).json({error: 'Atração Turística não cadastrada pelo usuário.'})
+        }
+
     await attraction.destroy() 
     res.status(200).json({message: `Atração turística ID ${id} excluída com sucesso!`})
 } catch (error) {

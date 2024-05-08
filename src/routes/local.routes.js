@@ -1,27 +1,22 @@
 const {Router, query} = require('express');
 const { auth } = require('../middlewares/auth');
 const LocalController = require('../controllers/LocalController');
-
 const localRoutes = new Router; 
 
 //local - cadastro de atração privada
-localRoutes.post('/local',auth, LocalController.register)
-//colocar automático o user_id
+localRoutes.post('/',auth, LocalController.register)
 
 //local - listar todas as atrações privadas criadas pelo usuario
-localRoutes.get('/local', auth, LocalController.list)
-//criar condição que tem que ser criada por si.
+localRoutes.get('/', auth, LocalController.list)
 
 //local - listar atração privada por id se criada pelo usuario
-localRoutes.get('/local/:id', auth, LocalController.listById)
-//apenas criadas por si
+localRoutes.get('/:id', auth, LocalController.listById)
 
 //local - alterar a própria atração cadastrada
-localRoutes.put('/local/:id', auth, LocalController.update)
-// apenas rotas criadas por si.
+localRoutes.put('/:id', auth, LocalController.update)
 
 //local - excluir a própria atração privada cadastrada
-localRoutes.delete('/local/:id', auth, LocalController.delete)  
+localRoutes.delete('/:id', auth, LocalController.delete)  
 // apenas rotas criadas por si.
 
 module.exports = localRoutes 

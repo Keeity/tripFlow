@@ -66,12 +66,5 @@ const User = connection.define('users', {
 ,{paranoid: true}
 
 )
-User.beforeSave(async (user) => {  
-  user.password = await hash(user.password, 8)
-  })  
-
-User.beforeUpdate(async (user) => {  
-  user.password = await hash(user.password, 8)
-  })  
 
 module.exports = User

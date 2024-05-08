@@ -78,9 +78,18 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
 
 ## Para testar a API TripFlow
 
+  ### Para acessar as rotas como usuário comum (`user`), utilizar para login:
+   * email: `joao.silva@example.com`
+   * password: `oaojjj`
+
+  ### Para conseguir as rotas como usuário premium (`premiumUser`), utilizar para login:
+   * email: `carlos.oliveira@example.com`
+   * password: `solrac`
+
   ### Para conseguir acessar todas as rotas como administrador, utilizar para login:
    * email: `keeity@example.com`
    *  password: `ytieek`
+
 
    ### As rotas disponíveis para manipular a tabela Users são as seguintes:
 

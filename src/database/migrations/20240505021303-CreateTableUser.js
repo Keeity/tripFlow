@@ -25,7 +25,6 @@ module.exports = {
       },
       cpf: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false
       },
       phone: {
@@ -34,7 +33,6 @@ module.exports = {
       },
         email: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false,
              },
       password: {

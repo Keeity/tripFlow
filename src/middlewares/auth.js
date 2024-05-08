@@ -3,21 +3,23 @@ const { secret } = require('../config/database.config')  //ali embaixo, ao invé
 
 async function auth(req, res, next){ 
 try {
-console.log("Início do middleware")
+console.log("Início do middleware auth")
 const { authorization } = req.headers
-
+console.log(authorization)
 req['payload'] = verify(authorization, secret) 
 
-next() 
-} catch(error){
-return res.status(401).send({message: "Autenticação falhou", 
-cause: error.message
-})
-
-}
+if (authorization) {
+    next()
+}else {
+    return res.status(401).send({error: "Autenticação falhou", cause: error.message})
 }
 
+}  catch (error) {
+    console.error('Erro no middleware auth:', error);
+    res.status(500).send('Erro interno do servidor');
+    }
+
+}
 
 
-//daí, se quiser exigir autenticação em alguma rota, é só colocar o middleware entre req res da rota.  req, auth, res
 module.exports = { auth }
