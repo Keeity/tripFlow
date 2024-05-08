@@ -2,6 +2,9 @@ const {Router, query} = require('express');
 const { auth } = require('../middlewares/auth');
 const UserController = require('../controllers/UserController');
 const { checkRole } = require('../middlewares/role');
+const { userSchema } = require('../schemas/user.schema');
+const yup = require('../middlewares/yup');
+
 
 const userRoutes = new Router; 
 
@@ -9,13 +12,13 @@ const userRoutes = new Router;
 userRoutes.post('/login', UserController.login)
 
 //usuario - cadastro
-userRoutes.post('/', UserController.userRegister)
+userRoutes.post('/', yup(userSchema), UserController.userRegister)
 
 //usuario - alterar o próprio cadastro
 userRoutes.put('/', auth, UserController.userUpdate)
 
 //usuario - ver seu próprio cadastro
-// userRoutes.get('/', auth, UserController.viewRegister)
+userRoutes.get('/admin', auth, UserController.viewRegister)
 
 //usuario - reativar cadastro excluído
 userRoutes.put('/reactivate', UserController.reactivate)

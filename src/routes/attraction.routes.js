@@ -2,6 +2,8 @@ const {Router, query} = require('express');
 const { auth } = require('../middlewares/auth');
 const AttractionController = require('../controllers/AttractionController');
 const { checkRole } = require('../middlewares/role');
+const { attractionSchema } = require('../schemas/attraction.schema');
+const yup = require('../middlewares/yup');
 
 const attractionRoutes = new Router; 
 

@@ -1,6 +1,8 @@
 const {Router, query} = require('express');
 const { auth } = require('../middlewares/auth');
 const LocalController = require('../controllers/LocalController');
+const { attractionSchema } = require('../schemas/attraction.schema');
+const yup = require('../middlewares/yup');
 const localRoutes = new Router; 
 
 //local - cadastro de atração privada
