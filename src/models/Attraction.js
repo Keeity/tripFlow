@@ -1,5 +1,6 @@
-const { DataTypes } = require('sequelize') 
+const { Model, DataTypes, Sequelize } = require('sequelize') 
 const { connection } = require('../database/connection')
+const User = require('./User')
 
 const Attraction = connection.define('attractions', { 
     name: {

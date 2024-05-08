@@ -30,7 +30,7 @@ class Server {
   }
   async initializeServer(app) {
  
-    app.listen(PORT_API, () => console.log(`Servidor executando na porta ${PORT_API}`)) // Execução do servidor
+    app.listen(PORT_API, () => console.log(`Servidor executando na porta ${PORT_API}`))
   }
 }
 
