@@ -7,6 +7,7 @@ const {Router} = require('express');
 const axios = require('axios');
 const { auth } = require('../middlewares/auth');
 const Attraction = require('../models/Attraction');
+const { getCep } = require('../services/cep');
 
 class UserController {
 
@@ -18,27 +19,20 @@ async login(req,res) {
          if (!email) {
             return res.status(400).json({ message: 'O email é obrigatório' })
          }
-  
         if (!password) {
             return res.status(400).json({ message: 'O password é obrigatório' })
         }
-if (!password) {
-            return res.status(400).json({ message: 'O password é obrigatório' })
-        }
-
-       const user = await User.findOne({
+        const user = await User.findOne({
             where: {email:email}
         })
-  
-        if(!user){
+        if (!(user.deletedAt === null)) {
+        return res.status(400).json({ message: 'O cadastro foi excluído. Mas você pode reativá-lo' })
+      }
+      if(!user){
             return res.status(404).json({ messagem: 'Nenhum usuário corresponde a email e senha fornecidos!' })
         }
-        const hashSenha = await compare(password, user.password)
-  
-      //   if (user.deletedAt !== null) {
-      //     return res.status(400).json({ message: 'O cadastro foi excluído. Mas você pode reativá-lo' })
-      // }
-        
+       const hashSenha = await compare(password, user.password)
+     
         if(hashSenha === false) {
             return res.status(403).json({mensagem: 'Email e/ou senha não conferem'})
         }
@@ -52,27 +46,14 @@ if (!password) {
 }
 
 //usuario - cadastro de usuário comum (user)
-//falta criar validações YUP, coletar endereço pelo CPF de API...
+//falta coletar endereço pelo CPF de API...
 async userRegister(req,res) {
     try {
-        const { name, gender, birthDate, cpf, phone, email, password, cep, address, addressNumber, addressComplement } = req.body;
+        let { name, gender, birthDate, cpf, phone, email, password, cep, address: userAddress, addressNumber, addressComplement } = req.body;
     
-        if (!(name && birthDate && cpf && email && password && cep && address && addressNumber)) {
-          return res.status(400).json({ message: 'Faltou indicar um campo obrigatório!' });
-        }
-    
-        if (!(name.length >= 8)) {
-          return res.status(400).json({ message: 'O nome completo é obrigatório!' });
-        }
-    
-        if (!(password.length >= 6)) {
-          return res.status(400).json({ message: 'O password tem que ter pelo menos 6 caracteres!' });
-        }
+        const userCep = await getCep(cep);
+        const { address } = userCep;
 
-        if (!(birthDate.match(/\d{4}-\d{2}-\d{2}/gm))) {
-          return res.status(400).json({ message: 'A data de nascimento não está no formato correto ("aaaa-mm-dd")!' });
-        }
-    
         const existingEmail = await User.findOne({
           where: {
             email: email
@@ -137,7 +118,7 @@ async userUpdate (req,res) {
     try {
        const id = req.payload.sub
        const user = await User.findByPk(id)
-       const {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
+       let {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
 
       
     if(!user){
@@ -150,6 +131,9 @@ async userUpdate (req,res) {
       phone && (user.phone = phone);
      email && (user.email = email);
      cep && (user.cep = cep);
+     if (cep && !address) {
+      const userCep = await getCep(cep);
+     address = userCep.address;    }
      address && (user.address = address);
      addressNumber && (user.addressNumber = addressNumber);
      addressComplement && (user.addressComplement = addressComplement);
@@ -367,6 +351,7 @@ try {
     }
   }
 
+  
 //usuario - excluir qualquer cadastro - admin
 async usersDelete(req,res) { 
 try{

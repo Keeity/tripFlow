@@ -3,6 +3,7 @@ const Attraction = require('../models/Attraction');
 const {Router} = require('express');
 const axios = require('axios')
 const User = require("../models/User");
+const geoCodeService = require("../services/geocode");
 
 class AttractionController {
 
@@ -10,23 +11,21 @@ class AttractionController {
 // //attraction - Cadastrar atração pública 
 async register(req,res) {
     try {
-        const { name, description, visitDate, cep, addressNumber,attractionCategory, 
+        let { name, description, visitDate, cep, addressNumber,attractionCategory, 
                 adventureLevel, cost, rate, accessibility, selectiveWasteCollection } = req.body;
         
-        const { address, latitude, longitude } = req.body //arrumar
+        const geoCode = await geoCodeService.getGeoCode(cep, name);
         
-        const id = req.payload.sub
-       
+  if(!geoCode)
+ {
+  return res.status(400).json({ error: 'Não foi possível obter os dados de localização para o CEP ou localidade fornecida. Tente inserir mais informação' });
+ } 
 
-        if (!(name && description && visitDate && cep && address 
-            && latitude && longitude && attractionCategory)) {
-          return res.status(400).json({ message: 'Faltou indicar um campo obrigatório!' });
-        }
-    
-        if (!(visitDate.match(/\d{4}-\d{2}-\d{2}/gm))) {
-          return res.status(400).json({ message: 'A data de visitação não está no formato correto ("aaaa-mm-dd")!' });
-        }
-    
+ const { address, latitude, longitude } = geoCode
+  const id = req.payload.sub
+
+  const geoLocality = `https://www.google.com/maps/?q=${latitude},${longitude}`;
+
         const existingName = await Attraction.findOne({
           where: {
             name: name, 
@@ -44,6 +43,7 @@ async register(req,res) {
           addressNumber,
           latitude, 
           longitude,
+          geoLocality,
           attractionCategory,
           adventureLevel,
           cost,

@@ -24,7 +24,7 @@ module.exports = {
     },
      cep: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
        },
     address: {
       type: Sequelize.STRING,
@@ -41,6 +41,10 @@ module.exports = {
      longitude: {
           allowNull: false,
           type: Sequelize.FLOAT
+        },
+        geoLocality: {
+          allowNull: true,
+          type: Sequelize.STRING
         },
      attractionCategory: {
           type: Sequelize.ENUM,
