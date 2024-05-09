@@ -6,7 +6,8 @@ const { compare, hash } = require("bcryptjs")
 const {Router} = require('express');
 const axios = require('axios');
 const { auth } = require('../middlewares/auth');
-
+const Attraction = require('../models/Attraction');
+const { getCep } = require('../services/cep');
 
 class UserController {
 
@@ -18,27 +19,20 @@ async login(req,res) {
          if (!email) {
             return res.status(400).json({ message: 'O email é obrigatório' })
          }
-  
         if (!password) {
             return res.status(400).json({ message: 'O password é obrigatório' })
         }
-if (!password) {
-            return res.status(400).json({ message: 'O password é obrigatório' })
-        }
-
-       const user = await User.findOne({
+        const user = await User.findOne({
             where: {email:email}
         })
-  
-        if(!user){
+        if (!(user.deletedAt === null)) {
+        return res.status(400).json({ message: 'O cadastro foi excluído. Mas você pode reativá-lo' })
+      }
+      if(!user){
             return res.status(404).json({ messagem: 'Nenhum usuário corresponde a email e senha fornecidos!' })
         }
-        const hashSenha = await compare(password, user.password)
-  
-      //   if (user.deletedAt !== null) {
-      //     return res.status(400).json({ message: 'O cadastro foi excluído. Mas você pode reativá-lo' })
-      // }
-        
+       const hashSenha = await compare(password, user.password)
+     
         if(hashSenha === false) {
             return res.status(403).json({mensagem: 'Email e/ou senha não conferem'})
         }
@@ -52,23 +46,14 @@ if (!password) {
 }
 
 //usuario - cadastro de usuário comum (user)
-//falta criar validações YUP, coletar endereço pelo CPF de API...
+//falta coletar endereço pelo CPF de API...
 async userRegister(req,res) {
     try {
-        const { name, gender, birthDate, cpf, phone, email, password, cep, address, addressNumber, addressComplement } = req.body;
+        let { name, gender, birthDate, cpf, phone, email, password, cep, address: userAddress, addressNumber, addressComplement } = req.body;
     
-        if (!(name && birthDate && cpf && email && password && cep && address && addressNumber)) {
-          return res.status(400).json({ message: 'Faltou indicar um campo obrigatório!' });
-        }
-    
-        if (!(name.length >= 8)) {
-          return res.status(400).json({ message: 'O nome completo é obrigatório!' });
-        }
-    
-        if (!(birthDate.match(/\d{4}-\d{2}-\d{2}/gm))) {
-          return res.status(400).json({ message: 'A data de nascimento não está no formato correto ("aaaa-mm-dd")!' });
-        }
-    
+        const userCep = await getCep(cep);
+        const { address } = userCep;
+
         const existingEmail = await User.findOne({
           where: {
             email: email
@@ -114,12 +99,26 @@ async userRegister(req,res) {
       }
     }
 
+
+//usuario - ver seu próprio cadastro
+async viewRegister (req, res) {
+  try {
+    const id = req.payload.sub
+    const user = await User.findByPk(id)
+          res.json(user)
+      }
+  catch (error) {
+    console.error(`Erro ao visualizar cadastro: ${error}`)
+    return res.status(500).json({error: 'Erro interno do servidor'})
+  }
+}
+
 //usuario - alterar o próprio cadastro
 async userUpdate (req,res) { 
     try {
        const id = req.payload.sub
        const user = await User.findByPk(id)
-       const {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
+       let {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
 
       
     if(!user){
@@ -132,6 +131,9 @@ async userUpdate (req,res) {
       phone && (user.phone = phone);
      email && (user.email = email);
      cep && (user.cep = cep);
+     if (cep && !address) {
+      const userCep = await getCep(cep);
+     address = userCep.address;    }
      address && (user.address = address);
      addressNumber && (user.addressNumber = addressNumber);
      addressComplement && (user.addressComplement = addressComplement);
@@ -349,14 +351,24 @@ try {
     }
   }
 
+  
 //usuario - excluir qualquer cadastro - admin
 async usersDelete(req,res) { 
 try{
-    const { id } = req.params; 
+  const { id } = req.params; 
    const user = await User.findByPk(id);
+   const attractions = await Attraction.findAll({
+    where: { user_id: id }
+  });
+
    if(!user) {
     return res.status(404).json({error:`Usuário ID ${id} não encontrado.`})
      }
+
+     if(attractions.length > 0) {
+      return res.status(404).json({error:`Não foi possível excluir, pois usuário id ${id} possui atrações cadastradas.`})
+       }
+  
    await user.destroy() 
     res.status(200).json({message: `Usuário ID ${id} excluído com sucesso!`})
 } catch (error) {

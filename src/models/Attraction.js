@@ -17,7 +17,7 @@ const Attraction = connection.define('attractions', {
      },
       cep: {
        type: Sequelize.STRING,
-       allowNull: false,
+       allowNull: true,
         },
      address: {
        type: Sequelize.STRING,
@@ -35,7 +35,11 @@ const Attraction = connection.define('attractions', {
            allowNull: false,
            type: Sequelize.FLOAT
          },
-      attractionCategory: {
+       geoLocality: {
+          allowNull: true,
+          type: Sequelize.STRING
+       },
+       attractionCategory: {
            type: Sequelize.ENUM,
            values: ['natural', 'urbana'],
            allowNull: false
