@@ -8,13 +8,36 @@ const geoCodeService = require("../services/geocode");
 class LocalController {
 
 // local - cadastro de atração privada
-
-      
-
-
- 
 async register(req,res) {
-
+/* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
+   #swagger.description = 'Cadastrar uma nova atração turística privada.'
+    #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+    #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Informações da atração turística para cadastro.',
+        required: true,
+        schema: {
+            name: "Trilha da Lagoinha do Leste",
+            description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
+            visitDate: "2024-05-07",
+            cep: "12345-678",
+            addressNumber: 123,
+            attractionCategory: "natural",
+            adventureLevel: "Radical",
+            cost: "Gratuito",
+            rate: "10",
+            accessibility: false,
+            selectiveWasteCollection: false
+        }
+   }
+   #swagger.responses[201] = { description: 'Atração turística cadastrada com sucesso.' }
+   #swagger.responses[400] = { description: 'Não foi possível obter os dados de localização para o CEP ou localidade fornecida.' }
+   #swagger.responses[409] = { description: 'Atração Turística já cadastrada.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+*/
      try {
         const { name, description, visitDate, cep, addressNumber,attractionCategory, 
                 adventureLevel, cost, rate, accessibility, selectiveWasteCollection } = req.body;
@@ -24,8 +47,7 @@ async register(req,res) {
                 {
                 return res.status(400).json({ error: 'Não foi possível obter os dados de localização para o CEP ou localidade fornecida. Tente inserir mais informação' });
                 } 
-                
-                
+                     
                 const { address, latitude, longitude } = geoCode
                 const id = req.payload.sub
                 
@@ -68,11 +90,18 @@ async register(req,res) {
       }
     }
 
-
-
-
 // //local - listar todas as atrações privadas criadas pelo usuario
 async list (req, res) {
+  /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
+   #swagger.description = 'Listar todas as atrações turísticas privadas criadas pelo usuário.'
+  #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+      #swagger.responses[200] = { description: 'Atrações turísticas cadastradas pelo usuário.' }
+   #swagger.responses[404] = { description: 'Nenhuma atração turística cadastrada pelo usuário.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+*/
     try {
         const userId = req.payload.sub
         const attractions = await Attraction.findAll({
@@ -92,8 +121,23 @@ async list (req, res) {
     }
   }
 
-// //local - listar atração privada por id se criada pelo usuario
+//local - listar atração privada por id se criada pelo usuario
 async listById (req,res) {
+  /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
+   #swagger.description = 'Filtrar uma atração turística privada pelo ID, se criada pelo usuário.'
+    #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID da atração turística.',
+        required: true
+   }
+   #swagger.responses[200] = { description: 'Detalhes da atração turística.' }
+   #swagger.responses[404] = { description: 'Atração Turística não cadastrada pelo usuário.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+*/
     try {
     const { id } = req.params
     const user_id = req.payload.sub
@@ -116,6 +160,29 @@ async listById (req,res) {
 
 // //local - alterar a própria atração cadastrada
 async update (req,res) { 
+  /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
+   #swagger.description = 'Alterar informações da própria atração turística cadastrada pelo usuário.'
+    #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID da atração turística a ser alterada.',
+        required: true
+   }
+   #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Dados para atualização da atração turística.',
+        schema: {
+            description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
+            accessibility: false
+        }
+   }
+   #swagger.responses[200] = { description: 'Alteração realizada com sucesso.' }
+   #swagger.responses[404] = { description: 'Atração Turística não encontrada ou não cadastrada pelo usuário.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+*/
     try {
    
         const { id } = req.params
@@ -160,6 +227,21 @@ await attraction.save();
 
 // //local - excluir a própria atração privada cadastrada
 async delete(req,res) { 
+  /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
+   #swagger.description = 'Excluir atração turística privada cadastrada pelo próprio usuário.'
+    #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID da atração turística a ser excluída.',
+        required: true
+   }
+   #swagger.responses[200] = { description: 'Atração turística excluída com sucesso.' }
+   #swagger.responses[404] = { description: 'Atração Turística não encontrada ou não cadastrada pelo usuário.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+*/
 try{
     const { id } = req.params
     const userId = req.payload.sub

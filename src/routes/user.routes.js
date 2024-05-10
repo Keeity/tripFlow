@@ -11,7 +11,7 @@ const userRoutes = new Router;
 //usuario - Fazer Login
 userRoutes.post('/login', UserController.login)
 
-//usuario - cadastro
+//usuario - cadastro de usuário (user)
 userRoutes.post('/', yup(userSchema), UserController.userRegister)
 
 //usuario - alterar o próprio cadastro
@@ -31,9 +31,6 @@ userRoutes.get('/admin', auth, checkRole('admin'), UserController.usersList)
 
 //usuario - listar por id - admin
 userRoutes.get('/admin/:id', auth, checkRole('admin'), UserController.listUsersById)
-
-//usuario - listar por busca
-// userRoutes.get('/filter', auth, checkRole('admin'), UserController.listByFilter)
 
 //usuario - alterar qualquer cadastro - admin
 userRoutes.put('/admin/:id', auth, checkRole('admin'), yup(updateUserSchema), UserController.update)

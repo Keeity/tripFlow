@@ -1,0 +1,1080 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Trip Flow",
+    "description": "Documentação da Trip Flow"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization",
+      "description": "Token de Autenticação"
+    }
+  },
+  "paths": {
+    "/usuario/login": {
+      "post": {
+        "tags": [
+          "Usuário - Login e Cadastro"
+        ],
+        "description": "Login e Autenticação do Usuário",
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "Login",
+            "in": "body",
+            "description": "Faça login, com email e senha, para se autenticar e retornar um token JWT.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "rawan@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Rawan15"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso, token gerado."
+          },
+          "400": {
+            "description": "Email ou senha não fornecidos."
+          },
+          "403": {
+            "description": "Email e/ou senha não conferem."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/usuario/": {
+      "post": {
+        "tags": [
+          "Usuário - Login e Cadastro"
+        ],
+        "description": "Cadastro de novo Usuário - user",
+        "operationId": "cadastro",
+        "parameters": [
+          {
+            "name": "Cadastro",
+            "in": "body",
+            "description": "Insira os dados cadastrais do novo usuário.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Mariana Hawangledt"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Feminino"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "2015-08-10"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "15156715121"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "(48) 991234567"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "mariana@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Mariana10"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88036-002"
+                },
+                "addressNumber": {
+                  "type": "number",
+                  "example": 321
+                },
+                "addressComplement": {
+                  "type": "string",
+                  "example": "apto 105"
+                }
+              },
+              "required": [
+                "name",
+                "gender",
+                "birthDate",
+                "cpf",
+                "email",
+                "password",
+                "cep",
+                "addressNumber"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Email ou CPF já cadastrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "* Usuário - Acesso ao próprio Cadastro"
+        ],
+        "description": "Alterar seus dados cadastrais",
+        "operationId": "Alterar próprio cadastro",
+        "parameters": [
+          {
+            "name": "Altera Cadastro",
+            "in": "body",
+            "description": "Insira os dados cadastrais que serão alterados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "phone": {
+                  "type": "string",
+                  "example": "(47) 912345634"
+                }
+              }
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alteração realizada com sucesso!"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "* Usuário - Acesso ao próprio Cadastro"
+        ],
+        "description": "Visualizar o próprio cadastro",
+        "operationId": "Ver próprio cadastro",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do cadastro do usuário."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "* Usuário - Acesso ao próprio Cadastro"
+        ],
+        "description": "Excluir o próprio Cadastro",
+        "operationId": "Excluir próprio cadastro",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Conta excluída com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/usuario/reactivate": {
+      "put": {
+        "tags": [
+          "Usuário - Login e Cadastro"
+        ],
+        "description": "Reativação de Cadastro de Usuário",
+        "operationId": "reativacao",
+        "parameters": [
+          {
+            "name": "cpf",
+            "required": true,
+            "type": "string",
+            "example": "055.887.232-52",
+            "description": "Insira o número de cpf do usuário cujo cadastro se pretende reativar",
+            "in": "query"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "where": {
+                  "example": "any"
+                },
+                "paranoid": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cadastro reativado com sucesso!"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Usuário excluído não encontrado."
+          },
+          "409": {
+            "description": "Usuário já está ativo."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/usuario/admin": {
+      "get": {
+        "tags": [
+          "Usuário - Acesso ao administrador"
+        ],
+        "description": "Listar todos os usuários - Acesso exclusivo Administrador",
+        "operationId": "Listar usuarios",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de todos os usuários."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/usuario/admin/{id}": {
+      "get": {
+        "tags": [
+          "Usuário - Acesso ao administrador"
+        ],
+        "description": "Filtrar usuário por ID - Acesso exclusivo Administrador",
+        "operationId": "Filtrar cadastro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Insira o id do usuário a ser pesquisado."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do usuário."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuário - Acesso ao administrador"
+        ],
+        "description": "Altera qualquer cadastro, inclusive tipo de usuário - Acesso exclusivo Administrador",
+        "operationId": "Altera cadastro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Insira o id do usuário para alteração de cadastro.",
+            "example": "6"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "Cadastro",
+            "in": "body",
+            "description": "Insira os dados cadastrais do usuário.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Mariana L. Hawangledt"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário alterado com sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuário - Acesso ao administrador"
+        ],
+        "description": "Excluir qualquer cadastro - Acesso exclusivo Administrador",
+        "operationId": "Excluir cadastro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Insira o id do usuário que se pretende excluir.",
+            "example": "6"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário excluído com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Usuário não encontrado ou possui atrações cadastradas."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/local/": {
+      "post": {
+        "tags": [
+          "* Atrações Turísticas - Locais/ Privadas"
+        ],
+        "description": "Cadastrar uma nova atração turística privada.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações da atração turística para cadastro.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Trilha da Lagoinha do Leste"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes."
+                },
+                "visitDate": {
+                  "type": "string",
+                  "example": "2024-05-07"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "12345-678"
+                },
+                "addressNumber": {
+                  "type": "number",
+                  "example": 123
+                },
+                "attractionCategory": {
+                  "type": "string",
+                  "example": "natural"
+                },
+                "adventureLevel": {
+                  "type": "string",
+                  "example": "Radical"
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "Gratuito"
+                },
+                "rate": {
+                  "type": "string",
+                  "example": "10"
+                },
+                "accessibility": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "selectiveWasteCollection": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Atração turística cadastrada com sucesso."
+          },
+          "400": {
+            "description": "Não foi possível obter os dados de localização para o CEP ou localidade fornecida."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Atração Turística já cadastrada."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "* Atrações Turísticas - Locais/ Privadas"
+        ],
+        "description": "Listar todas as atrações turísticas privadas criadas pelo usuário.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atrações turísticas cadastradas pelo usuário."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Nenhuma atração turística cadastrada pelo usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/local/{id}": {
+      "get": {
+        "tags": [
+          "* Atrações Turísticas - Locais/ Privadas"
+        ],
+        "description": "Filtrar uma atração turística privada pelo ID, se criada pelo usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da atração turística."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Atração Turística não cadastrada pelo usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "* Atrações Turísticas - Locais/ Privadas"
+        ],
+        "description": "Alterar informações da própria atração turística cadastrada pelo usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística a ser alterada."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados para atualização da atração turística.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "example": "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes."
+                },
+                "accessibility": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alteração realizada com sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Atração Turística não encontrada ou não cadastrada pelo usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "* Atrações Turísticas - Locais/ Privadas"
+        ],
+        "description": "Excluir atração turística privada cadastrada pelo próprio usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística a ser excluída."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atração turística excluída com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Atração Turística não encontrada ou não cadastrada pelo usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/attraction/": {
+      "post": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Cadastrar uma nova atração turística pública - Apenas Administrador.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações da atração turística.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Trilha da Lagoinha do Leste"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes."
+                },
+                "visitDate": {
+                  "type": "string",
+                  "example": "2024-05-07"
+                },
+                "attractionCategory": {
+                  "type": "string",
+                  "example": "natural"
+                },
+                "adventureLevel": {
+                  "type": "string",
+                  "example": "Radical"
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "Gratuito"
+                },
+                "rate": {
+                  "type": "string",
+                  "example": "10"
+                },
+                "accessibility": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "selectiveWasteCollection": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Atração turística cadastrada com sucesso."
+          },
+          "400": {
+            "description": "Não foi possível obter os dados de localização para o CEP ou localidade fornecida."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Atração Turística já cadastrada."
+          },
+          "500": {
+            "description": "Não foi possível cadastrar a atração turística."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Visualizar todas as atrações turísticas cadastradas - Usuário Premium e Administrador.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listadas todas as atrações turísticas cadastradas."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/attraction/filter": {
+      "get": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Filtrar atrações turísticas gerais cadastradas - Usuário Premium e Administrador.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Filtros para a busca de atrações turísticas publicadas.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "attractionCategory": {
+                  "type": "string",
+                  "example": "natural"
+                },
+                "accessibility": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cep",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "attractionCategory",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "visibility",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "adventureLevel",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cost",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "rate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "accessibility",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "selectiveWasteCollection",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listadas as atrações turísticas pelos parâmetros fornecidos."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Nenhuma atração turística encontrada com os parâmetros fornecidos."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/attraction/{id}": {
+      "get": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Encontrar uma atração turística geral pelo ID - Usuário Premium e Administrador.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da atração turística encontrada."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Atração Turística não encontrada."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Alterar informações de uma atração turística geral - Apenas Administrador.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística a ser alterada."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados para atualização da atração turística.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "example": "Uma das praias mais bonitas do sul, excelente para a prática de surf. Quando o vento está noroeste ou oeste, fica uma condição ótima para o esporte. É bastante extensa."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atração turística alterada com sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Atração Turística não encontrada."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Atrações Turísticas - Gerais"
+        ],
+        "description": "Excluir uma atração turística Geral - Apenas Administrador.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da atração turística a ser excluída."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Faça login para executar essa operação e insira o token gerado no campo abaixo:",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atração Turística excluída com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Atração Turística não encontrada."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ]
+}

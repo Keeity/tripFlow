@@ -11,9 +11,27 @@ const { getCep } = require('../services/cep');
 
 class UserController {
 
-//usuario - Fazer Login
+
 async login(req,res) {
-    try {
+  /*
+  #swagger.tags = ['Usuário - Login e Cadastro']
+   #swagger.operationId = 'login'
+  #swagger.description = 'Login e Autenticação do Usuário'
+ #swagger.parameters['Login'] = {
+            in: 'body',
+            description: 'Faça login, com email e senha, para se autenticar e retornar um token JWT.',
+           schema: {
+                   $email: "rawan@example.com",
+                   $password: "Rawan15"
+                   }
+                      } 
+   #swagger.responses[200] = { description: 'Login realizado com sucesso, token gerado.' }
+   #swagger.responses[400] = { description: 'Email ou senha não fornecidos.' }
+   #swagger.responses[403] = { description: 'Email e/ou senha não conferem.' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+    */
+ try {
       const email = req.body.email;
       const password = req.body.password;
          if (!email) {
@@ -45,15 +63,34 @@ async login(req,res) {
     }
 }
 
-//usuario - cadastro de usuário comum (user)
-//falta coletar endereço pelo CPF de API...
 async userRegister(req,res) {
+    /*
+  #swagger.tags = ['Usuário - Login e Cadastro']
+   #swagger.operationId = 'cadastro'
+  #swagger.description = 'Cadastro de novo Usuário - user'
+ #swagger.parameters['Cadastro'] = {
+            in: 'body',
+            description: 'Insira os dados cadastrais do novo usuário.',
+            schema: {
+                    $name: "Mariana Hawangledt",
+                    $gender: "Feminino",
+                    $birthDate: "2015-08-10",
+                    $cpf: "15156715121",
+                    phone: "(48) 991234567",
+                    $email: "mariana@example.com",
+                    $password: "Mariana10",
+                    $cep: "88036-002",
+                    $addressNumber: 321,
+                    addressComplement: "apto 105"
+            }}   
+   #swagger.responses[201] = { description: 'Usuário cadastrado com sucesso.' }
+   #swagger.responses[409] = { description: 'Email ou CPF já cadastrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+    */ 
     try {
         let { name, gender, birthDate, cpf, phone, email, password, cep, address: userAddress, addressNumber, addressComplement } = req.body;
-    
         const userCep = await getCep(cep);
         const { address } = userCep;
-
         const existingEmail = await User.findOne({
           where: {
             email: email
@@ -99,13 +136,75 @@ async userRegister(req,res) {
       }
     }
 
+//usuario/reactivate - reativar cadastro
+async reactivate (req,res) { 
+  /*
+#swagger.tags = ['Usuário - Login e Cadastro']
+#swagger.operationId = 'reativacao'
+#swagger.description = 'Reativação de Cadastro de Usuário',
+#swagger.parameters['cpf'] = { required: true, type: 'string', example: '055.887.232-52', description: 'Insira o número de cpf do usuário cujo cadastro se pretende reativar'},
+ #swagger.responses[200] = { description: 'Cadastro reativado com sucesso!' }
+   #swagger.responses[404] = { description: 'Usuário excluído não encontrado.' }
+   #swagger.responses[409] = { description: 'Usuário já está ativo.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
 
-//usuario - ver seu próprio cadastro
+*/ 
+ 
+try {
+ const { cpf } = req.query
+  const user = await User.findOne({ where: {cpf}, paranoid: false})
+  const {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
+  const deletedAt = user.deletedAt
+if(!user){
+  return res.status(404).json({error: 'Não foi encontrado um usuário excluído com esse cpf. Faça seu cadastro ou login'})
+}
+
+if (user.deletedAt) {
+user.setDataValue('deletedAt', null)
+} else {
+return res.status(409).json({error:`Usuário está ativo. Faça seu login`})}
+
+ if (password) {
+   const hashPassword = await hash(password, 8);
+   user.password = hashPassword;
+ }
+
+phone && user.setDataValue('phone', phone);
+email && user.setDataValue('email', email);
+cep && user.setDataValue('cep', cep);
+address && user.setDataValue('address', address);
+addressNumber && user.setDataValue('addressNumber', addressNumber);
+addressComplement && user.setDataValue('addressComplement', addressComplement);
+
+await user.save();
+console.log("Cadastro reativado com sucesso!")
+res.status(200).json({message: "Cadastro reativado com sucesso!"})
+
+
+} catch (error) {
+  console.error(`Erro ao tentar reativar: ${error}`);
+  return res.status(500).json({error: 'Erro interno do servidor'});
+}
+}
+
 async viewRegister (req, res) {
+   /*
+  #swagger.tags = ['* Usuário - Acesso ao próprio Cadastro']
+   #swagger.operationId = 'Ver próprio cadastro'
+  #swagger.description = 'Visualizar o próprio cadastro'
+   #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+       #swagger.responses[200] = { description: 'Dados do cadastro do usuário.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+      */ 
+
   try {
+   
     const id = req.payload.sub
     const user = await User.findByPk(id)
-          res.json(user)
+          res.status(200).json(user)
       }
   catch (error) {
     console.error(`Erro ao visualizar cadastro: ${error}`)
@@ -115,11 +214,28 @@ async viewRegister (req, res) {
 
 //usuario - alterar o próprio cadastro
 async userUpdate (req,res) { 
+     /*
+  #swagger.tags = ['* Usuário - Acesso ao próprio Cadastro']
+   #swagger.operationId = 'Alterar próprio cadastro'
+  #swagger.description = 'Alterar seus dados cadastrais'
+ #swagger.parameters['Altera Cadastro'] = {
+            in: 'body',
+            description: 'Insira os dados cadastrais que serão alterados.',
+            schema: {
+                    phone: '(47) 912345634',
+            }}   
+   #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+      #swagger.responses[200] = { description: 'Alteração realizada com sucesso!' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+            */ 
     try {
        const id = req.payload.sub
        const user = await User.findByPk(id)
        let {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
-
       
     if(!user){
        return res.status(404).json({error: 'Usuário não encontrado.'})
@@ -150,6 +266,18 @@ await user.save();
 
 //usuario - excluir o próprio cadastro
 async userDelete(req,res) { 
+     /*
+  #swagger.tags = ['* Usuário - Acesso ao próprio Cadastro']
+   #swagger.operationId = 'Excluir próprio cadastro'
+  #swagger.description = 'Excluir o próprio Cadastro'
+   #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }  
+       #swagger.responses[204] = { description: 'Conta excluída com sucesso.' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+    */ 
     try{
       const id = req.payload.sub
       const user = await User.findByPk(id)
@@ -157,6 +285,7 @@ async userDelete(req,res) {
       return res.status(404).json({error:`User ID ${id} não encontrado.`})
        }
      await user.destroy() 
+     console.log('Conta excluída!')
       res.status(204).json({message: 'Conta excluída! Mas você pode fazer novo cadastro sempre que quiser :)'})
     
     } catch (error) {
@@ -164,49 +293,17 @@ async userDelete(req,res) {
       return res.status(500).json({error: 'Erro interno do servidor'});
     }
       }
-
- //usuario/reactivate - reativar cadastro
-async reactivate (req,res) { 
-  try {
-    const { cpf } = req.query
-     const user = await User.findOne({ where: {cpf}, paranoid: false})
-     const {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
-     const deletedAt = user.deletedAt
-  if(!user){
-     return res.status(404).json({error: 'Não foi encontrado um usuário excluído com esse cpf. Faça seu cadastro ou login'})
-   }
-   
-if (user.deletedAt) {
-  user.setDataValue('deletedAt', null)
-} else {
-  return res.status(409).json({error:`Usuário está ativo. Faça seu login`})}
-
-    if (password) {
-      const hashPassword = await hash(password, 8);
-      user.password = hashPassword;
-    }
-
-  phone && user.setDataValue('phone', phone);
-  email && user.setDataValue('email', email);
-  cep && user.setDataValue('cep', cep);
-  address && user.setDataValue('address', address);
-  addressNumber && user.setDataValue('addressNumber', addressNumber);
-  addressComplement && user.setDataValue('addressComplement', addressComplement);
-
-await user.save();
-   console.log("Cadastro reativado com sucesso!")
-   res.status(200).json({message: "Cadastro reativado com sucesso!"})
  
- 
-  } catch (error) {
-     console.error(`Erro ao tentar reativar: ${error}`);
-     return res.status(500).json({error: 'Erro interno do servidor'});
-   }
-}
-
-
 //usuario - listar todos - admin
 async usersList (req, res) {
+     /*
+  #swagger.tags = ['Usuário - Acesso ao administrador']
+ #swagger.operationId = 'Listar usuarios'
+ #swagger.description = 'Listar todos os usuários - Acesso exclusivo Administrador'
+    #swagger.responses[200] = { description: 'Lista de todos os usuários.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.'  }
+ */ 
+
     try {
            const users = await User.findAll()
             res.json(users)
@@ -219,6 +316,20 @@ async usersList (req, res) {
   
 //usuario - listar por id - admin
 async listUsersById (req,res) {
+     /*
+  #swagger.tags = ['Usuário - Acesso ao administrador']
+   #swagger.operationId = 'Filtrar cadastro'
+  #swagger.description = 'Filtrar usuário por ID - Acesso exclusivo Administrador'
+  #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+    #swagger.parameters['id'] = { description: 'Insira o id do usuário a ser pesquisado.' }
+     #swagger.responses[200] = { description: 'Dados do usuário.' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+    */ 
+
     try {
       const { id } = req.params
       const user = await User.findByPk(id)
@@ -233,108 +344,28 @@ async listUsersById (req,res) {
     }
   }
 
-// //filtro
-//   async listByFilter (req, res) {
-//     try {
-//       let params = {};
-
-//       if (req.query.id) {
-//         params.id = req.query.id;
-//       }
-//       if(req.query.name) {
-//         params = {...params, name: { [Op.iLike]: '%' + req.query.name + '%' }} 
-//       }
-
-//       if (req.query.gender) {
-//         params.gender = { [Op.iLike]: '%' + req.query.gender + '%' };
-//       }
-//       if (req.query.address) {
-//         params.address = { [Op.iLike]: '%' + req.query.address + '%' };
-//       }
-//       if (req.query.cpf) {
-//         params.cpf = req.query.cpf;
-//       }
-//       if (req.query.email) {
-//         params.email = { [Op.iLike]: '%' + req.query.email + '%' };
-//       }
-        
-//       const users = await User.findAll({ where: params });
-
-//       if (users.length > 0) {
-//         console.log(`Listando usuários pelos parâmetros fornecidos.`);
-//         return res.status(200).json(users);
-//       } else {
-//         console.log(`Nenhum usuário encontrado com os parâmetros fornecidos.`);
-//         return res.status(404).json({ error: 'Nenhum usuário encontrado.' });
-//       }
-//     } catch (error) {
-//       console.error(`Erro ao filtrar usuários: ${error}`);
-//       return res.status(500).json({ error: 'Erro interno do servidor' });
-//     }
-//   }
-
-//     const findUsers = await User.findAll({ where: params });
-
-//     if (findUsers.length > 0) {
-//       console.log('Listando usuários filtrados pelos parâmetros fornecidos.');
-//       return res.status(200).json(findUsers);
-//     } else {
-//       console.log('Nenhum usuário encontrado com os parâmetros fornecidos.');
-//       return res.status(404).json({ error: 'Nenhum usuário encontrado' });
-//     }
-//   } catch (error) {
-//     console.error(`Erro ao filtrar usuários: ${error}`);
-//     return res.status(500).json({ error: 'Erro interno do servidor' });
-//   }
-
-// // usuario - filtrar por name, gender, cpf, email, cep ou endereço - admin
-// async listUsersByFilter(req, res) {
-//   try {
-//     let params = {};
-//     if (req.query.name) {
-//       params.name = { [Op.iLike]: `%${req.query.name}%` };
-//     }
-
-//     if (req.query.gender) {
-//       params.gender = { [Op.iLike]: `%${req.query.gender}%` };
-//     }
-    
-//     if (req.query.cpf) {
-//       const cpfClean = req.query.cpf.replace(/[.-]/g, '');
-//       params.cpf = { [Op.iLike]: `%${cpfClean}%` };
-//     }
-
-//     if (req.query.email) {
-//       params.email = { [Op.iLike]: `%${req.query.email}%` };
-//     }
-
-//     if (req.query.cep) {
-//  const cepClean = req.query.cep.replace(/[.-]/g, '');
-// params.cep = { [Op.iLike]: `%${cepClean}%` };
-//     }
-
-//     if (req.query.address) {
-//       params.address = { [Op.iLike]: `%${req.query.address}%` };
-//     }
-
-//     const findUsers = await User.findAll({ where: params });
-
-//     if (findUsers.length > 0) {
-//       console.log('Listando usuários filtrados pelos parâmetros fornecidos.');
-//       return res.status(200).json(findUsers);
-//     } else {
-//       console.log('Nenhum usuário encontrado com os parâmetros fornecidos.');
-//       return res.status(404).json({ error: 'Nenhum usuário encontrado' });
-//     }
-//   } catch (error) {
-//     console.error(`Erro ao filtrar usuários: ${error}`);
-//     return res.status(500).json({ error: 'Erro interno do servidor' });
-//   }
-// }
-
-  
   //usuario - alterar qualquer cadastro - admin
 async update(req,res) { 
+       /*
+  #swagger.tags = ['Usuário - Acesso ao administrador']
+   #swagger.operationId = 'Altera cadastro'
+  #swagger.description = 'Altera qualquer cadastro, inclusive tipo de usuário - Acesso exclusivo Administrador'
+ #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+      #swagger.parameters['id'] = { description: 'Insira o id do usuário para alteração de cadastro.', example: '6' }
+ #swagger.parameters['Cadastro'] = {
+            in: 'body',
+            description: 'Insira os dados cadastrais do usuário.',
+            schema: {
+                    $name: 'Mariana L. Hawangledt',
+            }}   
+    #swagger.responses[200] = { description: 'Usuário alterado com sucesso.' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+      */ 
+
 try {
      const id = req.params.id;
     const user = await User.findByPk(id)
@@ -354,6 +385,20 @@ try {
   
 //usuario - excluir qualquer cadastro - admin
 async usersDelete(req,res) { 
+       /*
+  #swagger.tags = ['Usuário - Acesso ao administrador']
+  #swagger.operationId = 'Excluir cadastro'
+  #swagger.description = 'Excluir qualquer cadastro - Acesso exclusivo Administrador'
+ #swagger.parameters['authorization'] = { 
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+      #swagger.parameters['id'] = { description: 'Insira o id do usuário que se pretende excluir.', example: '6' }
+  #swagger.responses[200] = { description: 'Usuário excluído com sucesso.' }
+   #swagger.responses[404] = { description: 'Usuário não encontrado ou possui atrações cadastradas.' }
+   #swagger.responses[500] = { description: 'Erro interno do servidor.' }
+    */ 
+
 try{
   const { id } = req.params; 
    const user = await User.findByPk(id);

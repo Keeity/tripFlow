@@ -1,0 +1,1091 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Trip Flow",
+    "description": "Documentação da Trip Flow"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+        "name": "Login e Cadastro de Usuários"
+    },
+    {
+        "name": "Usuário - acesso pessoal"
+    },
+    {
+        "name": "Usuários - acesso pelo administrador"
+    },
+    {
+        "name": "Atrações Turísticas Locais"
+    },
+    {
+        "name": "Atrações Turísticas Gerais"
+    }
+],
+
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization",
+      "description": "Token de Autenticação"
+    }
+  },
+     "paths": {
+    "/usuario/login": {
+      "post": {
+        "tags": ["Login e Cadastro de Usuários"],
+        "description": "Insira seu email e senha para fazer login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "email@example.com"
+                },
+                "password": {
+                  "example": "Senha123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso!"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/": {
+      "post": {
+        "tags": ["Login e Cadastro de Usuários"],
+        "description": "Endpoint para cadastrar um novo usuário",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Nome do usuário.",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Email do usuário.",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "Senha do usuário.",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cep",
+            "description": "CEP do usuário.",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "description": "Endereço do usuário.",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "addressNumber",
+            "description": "Número do endereço do usuário.",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "gender": {
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                },
+                "birthDate": {
+                  "example": "any"
+                },
+                "cpf": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "cep": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "addressNumber": {
+                  "example": "any"
+                },
+                "addressComplement": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "$ref": "#/definitions/Usuario"
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/reactivate": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "where": {
+                  "example": "any"
+                },
+                "paranoid": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/admin": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/admin/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "visitDate": {
+                  "example": "any"
+                },
+                "cep": {
+                  "example": "any"
+                },
+                "addressNumber": {
+                  "example": "any"
+                },
+                "attractionCategory": {
+                  "example": "any"
+                },
+                "adventureLevel": {
+                  "example": "any"
+                },
+                "cost": {
+                  "example": "any"
+                },
+                "rate": {
+                  "example": "any"
+                },
+                "accessibility": {
+                  "example": "any"
+                },
+                "selectiveWasteCollection": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "visitDate": {
+                  "example": "any"
+                },
+                "cep": {
+                  "example": "any"
+                },
+                "attractionCategory": {
+                  "example": "any"
+                },
+                "addressNumber": {
+                  "example": "any"
+                },
+                "adventureLevel": {
+                  "example": "any"
+                },
+                "cost": {
+                  "example": "any"
+                },
+                "rate": {
+                  "example": "any"
+                },
+                "accessibility": {
+                  "example": "any"
+                },
+                "selectiveWasteCollection": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/attraction/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "visitDate": {
+                  "example": "any"
+                },
+                "cep": {
+                  "example": "any"
+                },
+                "addressNumber": {
+                  "example": "any"
+                },
+                "attractionCategory": {
+                  "example": "any"
+                },
+                "adventureLevel": {
+                  "example": "any"
+                },
+                "cost": {
+                  "example": "any"
+                },
+                "rate": {
+                  "example": "any"
+                },
+                "accessibility": {
+                  "example": "any"
+                },
+                "selectiveWasteCollection": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/attraction/filter": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cep",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "attractionCategory",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "visibility",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "adventureLevel",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cost",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "rate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "accessibility",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "selectiveWasteCollection",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/attraction/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "User"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "2000-01-01"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "12345678900"
+        },
+        "phone": {
+          "type": "string",
+          "example": "12345678900"
+        },
+        "email": {
+          "type": "string",
+          "example": "user@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "User10"
+        },
+        "cep": {
+          "type": "string",
+          "example": "12.345-678"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua Exemplo, 123"
+        },
+        "addressNumber": {
+          "type": "string",
+          "example": "123"
+        },
+        "addressComplement": {
+          "type": "string",
+          "example": "Apto 123"
+        },
+        "role": {
+          "type": "string",
+          "example": "user"
+        }
+      }
+    },
+    "Attraction": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nome da atração"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descrição da atração"
+        },
+        "visitDate": {
+          "type": "string",
+          "example": "2024-05-08"
+        },
+        "cep": {
+          "type": "string",
+          "example": "12345-678"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua Exemplo, 123"
+        },
+        "addressNumber": {
+          "type": "number",
+          "example": 123
+        },
+        "latitude": {
+          "type": "number",
+          "example": -23.5505
+        },
+        "longitude": {
+          "type": "number",
+          "example": -46.6333
+        },
+        "geoLocality": {
+          "type": "string",
+          "example": "Localidade geográfica"
+        },
+        "attractionCategory": {
+          "type": "string",
+          "example": "natural"
+        },
+        "visibility": {
+          "type": "string",
+          "example": "private"
+        },
+        "adventureLevel": {
+          "type": "string",
+          "example": "Radical"
+        },
+        "cost": {
+          "type": "string",
+          "example": "Gratuito"
+        },
+        "rate": {
+          "type": "string",
+          "example": "10"
+        },
+        "accessibility": {
+          "type": "boolean",
+          "example": true
+        },
+        "selectiveWasteCollection": {
+          "type": "boolean",
+          "example": true
+        },
+        "user_id": {
+          "type": "number",
+          "example": 2
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ]
+}
