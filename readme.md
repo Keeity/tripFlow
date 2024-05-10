@@ -86,7 +86,11 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
    * email: `carlos.oliveira@example.com`
    * password: `Carlos20`
 
-  ### Para conseguir acessar todas as rotas como administrador(`admin`), utilizar para login:
+  ### Para conseguir acessar todas as rotas como administrador(`admin`), utilizar para login uma das opções abaixo:
+
+   * email: `rawan@example.com`
+   *  password: `Rawan15`
+
    * email: `keeity@example.com`
    *  password: `Keeity17`
 
@@ -97,7 +101,7 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
 
 
    ### Documentação da API TripFlow:
-   Se a porta da API for 3000: `http://localhost:3000/docs`
+   Se a porta da API for 3000: `http://localhost:3000/doc`
 
 ## Outras Documentações Úteis:
 
@@ -118,3 +122,4 @@ Este é apenas o MVP, sendo que a proposta final da API busca atender à dificul
    ### Vídeo apresentando a API
    `lll`
 
+ 

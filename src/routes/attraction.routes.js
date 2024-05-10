@@ -12,13 +12,13 @@ const attractionRoutes = new Router;
 attractionRoutes.post('/',auth, checkRole('admin'), yup(attractionSchema), AttractionController.register)
 
 //attraction - listar todas as atrações cadastradas
-attractionRoutes.get('/', auth, checkRole('admin', 'premium'), AttractionController.list)
+attractionRoutes.get('/', auth, checkRole(['admin', 'premiumUser']), AttractionController.list)
 
 //attraction - listar atrações cadastradas em busca por nome
-attractionRoutes.get('/filter', auth, checkRole('admin', 'premium'), AttractionController.listByFilter)
+attractionRoutes.get('/filter', auth, checkRole(['admin', 'premiumUser']), AttractionController.listByFilter)
 
 //attraction - listar atrações por id
-attractionRoutes.get('/:id', auth, checkRole('admin', 'premium'), AttractionController.listById)
+attractionRoutes.get('/:id', auth, checkRole(['admin', 'premiumUser']), AttractionController.listById)
  
 //attraction - alterar qualquer atração
 attractionRoutes.put('/:id', auth, checkRole('admin'), yup(updateAttractionSchema), AttractionController.update)

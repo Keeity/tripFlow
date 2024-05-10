@@ -21,12 +21,12 @@ const User = require('../models/User');
 //     isPremiumOrAdmin: checkRole([roles.admin, roles.premiumUser])
 // };
 
-function checkRole(role) {
+function checkRole(roles) {
     return async function(req, res, next) {
     try{ 
         const id = req.payload.sub
         const user = await User.findByPk(id)
-        if (user && user.role === role) {
+        if (user && roles.includes (user.role)) {
             next();
         } else {
             res.status(403).send('Acesso negado. Usuário sem permissão para acessar');

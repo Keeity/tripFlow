@@ -18,10 +18,10 @@ exports.userSchema = yup.object().shape({
       .required('CPF é obrigatório')
       .matches(/^[0-9]{11}$|^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/, 'O CPF deve ter o formato nnnnnnnnnnn ou nnn.nnn.nnn-nn')
       .transform((value) => {if (value.length === 11) {return value.slice(0, 3) + '.' + value.slice(3, 6) + '.' + value.slice(6, 9) + '-' + value.slice(9);}return value;}), // CPF no formato 000.000.000-00
-  phone: yup
+   phone: yup
       .string()
       .matches(/^\(\d{2}\)\d{9}$|^\(\d{2}\) \d{9}$|^\(\d{2}\)\d{5}-\d{4}$|^\(\d{2}\) \d{5}-\d{4}$/, 'O telefone deve ter o formato (nn)nnnnnnnnn, (nn) nnnnnnnnn, (nn)nnnnn-nnnn ou (nn) nnnnn-nnnn')
-      .transform((value) => {if (value.length === 12) { return value.slice(0, 8) + '-' + value.slice(8);} else if (value.length === 13) { return value.slice(0, 9) + '-' + value.slice(9);}return value;}),
+      .transform((value, originalValue) => { const digits = originalValue.replace(/[ -]/g, '');if (digits.length === 11) {return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;}return originalValue}), // phone formato (nn) nnnnnnnnn
   email: yup
       .string()
       .email('Formato de email não é válido!')
