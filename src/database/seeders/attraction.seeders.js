@@ -1,130 +1,125 @@
 'use strict';
 
-//const { queryInterface, Sequelize } = require("sequelize");
+const { queryInterface, Sequelize } = require("sequelize");
+//const Attraction = require("../../models/Attraction");
 
-  module.exports = {
+module.exports = {
 up: async (queryInterface, Sequelize) => {
 await queryInterface.bulkInsert('attractions',[
 
     {
         name: 'Praia da Joaquina',
         description: 'Conhecida pelas suas dunas e ondas propícias para o surf, tendo uma infraestrutura boa para ficar com a família.',
-        visitDate: new Date('2024-01-15'),
+        visitDate: '2024-01-15',
         cep: '88062-400',
         address: 'Avenida Prefeito Acácio Garibaldi S Thiago, FLorianópolis, SC',
         latitude: -27.6285,
         longitude: -48.4676,
-        geoLocality: 'https://www.google.com/maps/?q=-27.6285,-48.4676',
         attractionCategory: 'natural',
         visibility: 'private',
-        adventureLevel: 'radical',
-        cost: 'gratuito',
+        adventureLevel: 'Radical',
+        cost: 'Gratuito',
         rate: '10',
         accessibility: true,
         selectiveWasteCollection: true,
         user_id: 1,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
       },
       {
         name: 'Lagoa da Conceição',
         description: 'Um dos cartões postais de Florianópolis, ideal para prática de esportes náuticos.',
-        visitDate: new Date('2024-03-15'),
+        visitDate: '2024-03-15',
         cep: '88062-020',
         address: 'Avenida das Rendeiras, FLorianópolis, SC',
-        latitude: -27.6035881,
-        longitude: -48.4780144,
-        geoLocality: 'https://www.google.com/maps/?q=-27.6035881,-48.4780144',
+        latitude: -27.6136,
+        longitude: -48.5015,
         attractionCategory: 'natural',
         visibility: 'private',
-        adventureLevel: 'moderado',
-        cost: 'gratuito',
+        adventureLevel: 'Moderado',
+        cost: 'Gratuito',
         rate: '9',
         accessibility: true,
         selectiveWasteCollection: true,
-        user_id: 2,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
+        user_id: 4,
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
       },
       {
         name: 'Praia Mole',
         description: 'Famosa pela beleza de suas águas e pela presença de jovens.',
-        visitDate: new Date('2024-04-05'),
+        visitDate: '2024-04-15',
         cep: '88061-200',
         address: 'Rodovia Jornalista Manoel de Menezes, FLorianópolis, SC',
-        latitude: -27.6031683,
-        longitude: -48.435544,
-        geoLocality: 'https://www.google.com/maps/?q=-27.6031683,-48.435544',
+        latitude: -27.6030,
+        longitude: -48.4606,
         attractionCategory: 'natural',
         visibility: 'private',
-        adventureLevel: 'tranquilo',
-        cost: 'gratuito',
+        adventureLevel: 'Tranquilo',
+        cost: 'Gratuito',
         rate: '10',
         accessibility: false,
         selectiveWasteCollection: true,
         user_id: 3,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
       },
       {
         name: 'Barra da Lagoa',
         description: 'Conhecida pela beleza de suas praias e pelo canal que liga a Lagoa da Conceição ao mar.',
-        visitDate: new Date('2024-05-03'),
+        visitDate: '2024-05-05',
         cep: '88061-300',
         address: 'Rua Angelina Joaquina dos Santos, FLorianópolis, SC',
-        latitude: -27.5789208,
-        longitude: -48.4428035,
-        geoLocality: 'https://www.google.com/maps/?q=-27.5789208,-48.4428035',
+        latitude: -27.5746,
+        longitude: -48.4330,
         attractionCategory: 'natural',
         visibility: 'private',
-        adventureLevel: 'tranquilo',
-        cost: 'gratuito',
-        rate: '10',
-        accessibility: true,
-        selectiveWasteCollection: true,
-        user_id: 4,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
-      },
-      {
-        name: 'Projeto Tamar',
-        description: 'Centro de visitantes do Projeto Tamar, voltado para a conservação das tartarugas marinhas.',
-        visitDate: new Date('2024-01-05'),
-        cep: '88053-700',
-        address: 'Rua Professor Ademir Francisco, 100, FLorianópolis, SC',
-        latitude: -27.5722216,
-        longitude: -48.4277108,
-        geoLocality: 'https://www.google.com/maps/?q=-27.5722216,-48.4277108',
-        attractionCategory: 'natural',
-        visibility: 'public',
-        adventureLevel: 'tranquilo',
-        cost: 'barato',
-        rate: '10',
-        accessibility: true,
-        selectiveWasteCollection: true,
-        user_id: 5,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
-        },
-       {
-         name: 'Ponte Hercílio Luz',
-        description: 'A Ponte Hercílio Luz é uma ponte pênsil localizada em Florianópolis, no estado brasileiro de Santa Catarina, sendo a mais antiga das três que ligam as partes insular e continental da capital catarinense. É a maior ponte suspensa do Brasil.',
-        visitDate: new Date('2024-01-04'),
-        cep: '88010-400',
-        address: 'Rua Jornalista Assis Chateaubriand 70, FLorianópolis, SC',
-        latitude: -27.5937918,
-        longitude: -48.5678643,
-        geoLocality: 'https://www.google.com/maps/?q=-27.5937918,-48.5678643',
-        attractionCategory: 'urbana',
-        visibility: 'public',
-        adventureLevel: 'tranquilo',
-        cost: 'gratuito',
+        adventureLevel: 'Tranquilo',
+        cost: 'Gratuito',
         rate: '10',
         accessibility: true,
         selectiveWasteCollection: true,
         user_id: 2,
-        createdAt: new Date('2024-05-05'),
-        updatedAt: new Date('2024-05-05')
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
+      },
+      {
+        name: 'Projeto Tamar',
+        description: 'Centro de visitantes do Projeto Tamar, voltado para a conservação das tartarugas marinhas.',
+        visitDate: '2024-01-05',
+        cep: '88053-700',
+        address: 'Rua Professor Ademir Francisco, 100, FLorianópolis, SC',
+        latitude: -27.7023,
+        longitude: -48.4082,
+        attractionCategory: 'natural',
+        visibility: 'public',
+        adventureLevel: 'Tranquilo',
+        cost: 'Barato',
+        rate: '10',
+        accessibility: true,
+        selectiveWasteCollection: true,
+        user_id: 1,
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
+        },
+       {
+         name: 'Ponte Hercílio Luz',
+        description: 'A Ponte Hercílio Luz é uma ponte pênsil localizada em Florianópolis, no estado brasileiro de Santa Catarina, sendo a mais antiga das três que ligam as partes insular e continental da capital catarinense. É a maior ponte suspensa do Brasil.',
+        visitDate: '2024-01-04',
+        cep: '88010-400',
+        address: 'Rua Jornalista Assis Chateaubriand 70, FLorianópolis, SC',
+        latitude: -27.5935000,
+        longitude: -48.5649000,
+        attractionCategory: 'urbana',
+        visibility: 'public',
+        adventureLevel: 'Tranquilo',
+        cost: 'Gratuito',
+        rate: '10',
+        accessibility: true,
+        selectiveWasteCollection: true,
+        user_id: 1,
+        createdAt: '2024-05-05',
+        updatedAt: '2024-05-05'
       }
 ])
 
@@ -133,14 +128,26 @@ await queryInterface.bulkInsert('attractions',[
 
 down: async (queryInterface, Sequelize) => {
 await queryInterface.bulkDelete('attractions',{
-   name: [
+    where: {
+    name: [
+       
         'Praia da Joaquina',
         'Lagoa da Conceição',
         'Praia Mole',
         'Barra da Lagoa',
         'Projeto Tamar',
         'Ponte Hercílio Luz'
-    ]
+    ],
+    description: [
+'Conhecida pelas suas dunas e ondas propícias para o surf, tendo uma infraestrutura boa para ficar com a família.',
+       'Um dos cartões postais de Florianópolis, ideal para prática de esportes náuticos.',
+       'Famosa pela beleza de suas águas e pela presença de jovens.',
+    'Conhecida pela beleza de suas praias e pelo canal que liga a Lagoa da Conceição ao mar.',
+        'Centro de visitantes do Projeto Tamar, voltado para a conservação das tartarugas marinhas.',
+       'A Ponte Hercílio Luz é uma ponte pênsil localizada em Florianópolis, no estado brasileiro de Santa Catarina, sendo a mais antiga das três que ligam as partes insular e continental da capital catarinense. É a maior ponte suspensa do Brasil.',
+          ]
+
+}
 })
 }
 }

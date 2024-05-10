@@ -1,6 +1,6 @@
 const yup = require('yup');
 
-exports.attractionSchema = yup.object().shape({
+exports.filterAttractionSchema = yup.object().shape({
   name: yup
       .string()
       .required('O nome da atração é obrigatório!'),
@@ -58,5 +58,3 @@ exports.attractionSchema = yup.object().shape({
   selectiveWasteCollection: yup
      .boolean('indique true se tiver acessibilidade.'),
 });
-
-

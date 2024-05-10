@@ -3,15 +3,17 @@ const yup = require('yup');
 exports.userSchema = yup.object().shape({
   name: yup
       .string()
-      .min(6)
+      .min(6, 'Insira o nome completo, com pelo menos 6 caracteres')
       .required('O nome é obrigatório')
       .test('is-valid-name', 'Indique nome e sobrenome!', (value) => {const words = value.trim().split(' ');return words.length >= 2;}),
   gender: yup
       .string()
-      .oneOf(['Feminino', 'Masculino', 'Outro'],'Indique o gênero como sendo feminino, masculino ou, se não se encaixar nesses, escreva outro'),
+      .oneOf(['Feminino', 'Masculino', 'Outro', 'feminino', 'masculino', 'outro'],'Indique o gênero como sendo feminino, masculino ou, se não se encaixar nesses, escreva outro')
+      .transform(value => value.toLowerCase()),
   birthDate: yup
       .string()
-      .matches(/^\d{4}-\d{2}-\d{2}$/, 'A data deve ter formato aaaa-mm-dd.')
+      .matches(/^(?:\d{2}\/\d{2}\/\d{4}|\d{2}-\d{2}-\d{4}|\d{4}-\d{2}-\d{2})$/,'A data deve ter formato dd/mm/aaaa, dd-mm-aaaa ou aaaa-mm-dd.')
+      .transform(value => { if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) { const [day, month, year] = value.split('/');return `${year}-${month}-${day}` } else if (/^\d{2}-\d{2}-\d{4}$/.test(value)) {const [day, month, year] = value.split('-'); return `${year}-${month}-${day}`;} else {  return value; } })
       .required('É muito importante inserir a sua data de nascimento!'),
   cpf: yup
       .string()
