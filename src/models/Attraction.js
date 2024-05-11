@@ -9,7 +9,7 @@ const Attraction = connection.define('attractions', {
       },
       description: {
        allowNull: false,
-       type: Sequelize.STRING
+       type: Sequelize.TEXT
       },
       visitDate: {
        allowNull: false,
@@ -19,6 +19,9 @@ const Attraction = connection.define('attractions', {
        type: Sequelize.STRING,
        allowNull: true,
         },
+      referencePoint: {
+       allowNull: true,
+       type: Sequelize.STRING      },
      address: {
        type: Sequelize.STRING,
        allowNull: false,
@@ -52,12 +55,12 @@ const Attraction = connection.define('attractions', {
             },
       adventureLevel: {
            type: Sequelize.ENUM,
-           values: ['Radical', 'Moderado', 'Tranquilo'],
+           values: ['radical', 'moderado', 'tranquilo'],
            allowNull: true
              },
       cost: {
            type: Sequelize.ENUM,
-           values: ['Gratuito', 'Barato', 'Mediano', 'Caro'],
+           values: ['gratuito', 'barato', 'mediano', 'caro'],
            allowNull: true
              },
        rate: {
@@ -87,6 +90,18 @@ const Attraction = connection.define('attractions', {
 }
 ,{paranoid: true}
 )
+
+Attraction.addHook('beforeValidate', (attraction, options) => {
+  if (attraction.adventureLevel) {
+    attraction.adventureLevel = attraction.adventureLevel.toLowerCase();
+  }
+  if (attraction.cost) {
+    attraction.cost = attraction.cost.toLowerCase();
+  }
+  if (attraction.attractionCategory) {
+    attraction.attractionCategory = attraction.attractionCategory.toLowerCase();
+  }
+});
 
 User.hasMany(Attraction, {foreignKey: 'user_id'}) 
 Attraction.belongsTo(User, {foreignKey: 'user_id'})

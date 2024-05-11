@@ -9,7 +9,7 @@ const User = connection.define('users', {
       },
       gender: {
         type: Sequelize.ENUM,
-        values: ['Feminino', 'Masculino', 'Outro'],
+        values: ['feminino', 'masculino', 'outro'],
         allowNull: true
           },
       birthDate: {
@@ -66,5 +66,10 @@ const User = connection.define('users', {
 ,{paranoid: true}
 
 )
+User.addHook('beforeValidate', (user, options) => {
+  if (user.gender) {
+    user.gender = user.gender.toLowerCase();
+  }
+});
 
 module.exports = User
