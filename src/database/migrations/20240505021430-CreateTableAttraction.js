@@ -16,7 +16,7 @@ module.exports = {
      },
      description: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
      },
      visitDate: {
       allowNull: false,
@@ -26,6 +26,10 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: true,
        },
+      referencePoint: {
+        allowNull: true,
+        type: Sequelize.STRING      
+      },
     address: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -59,12 +63,12 @@ module.exports = {
            },
      adventureLevel: {
           type: Sequelize.ENUM,
-          values: ['Radical', 'Moderado', 'Tranquilo'],
+          values: ['radical', 'moderado', 'tranquilo'],
           allowNull: true
             },
      cost: {
           type: Sequelize.ENUM,
-          values: ['Gratuito', 'Barato', 'Mediano', 'Caro'],
+          values: ['gratuito', 'barato', 'mediano', 'caro'],
           allowNull: true
             },
       rate: {
