@@ -2,17 +2,14 @@ const yup = require('yup');
 
 exports.filterAttractionSchema = yup.object().shape({
   name: yup
-      .string()
-      .required('O nome da atração é obrigatório!'),
+      .string(),
   description: yup
       .string()
       .min(15, 'Traga mais detalhes da atração turística')
-      .max(600, 'O nome da atração deve ter no máximo 600 caracteres!')
-      .required('A descrição é obrigatória! Dê o máximo de detalhes que puder :)!'),
+      .max(600, 'O nome da atração deve ter no máximo 600 caracteres!'),
    visitDate: yup
       .string()
       .matches(/^(?:\d{2}\/\d{2}\/\d{4}|\d{2}-\d{2}-\d{4}|\d{4}-\d{2}-\d{2})$/,'A data deve ter formato dd/mm/aaaa, dd-mm-aaaa ou aaaa-mm-dd.')
-      .required('É muito importante inserir a data de visitação!')
       .transform(value => { if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) { const [day, month, year] = value.split('/');return `${year}-${month}-${day}` } else if (/^\d{2}-\d{2}-\d{4}$/.test(value)) {const [day, month, year] = value.split('-'); return `${year}-${month}-${day}`;} else {  return value; } }),
   cep: yup
       .string()
@@ -37,10 +34,9 @@ exports.filterAttractionSchema = yup.object().shape({
           return true;} const decimalPart = ('' + value).split('.')[1];return value >= -90 && value <= 90 && decimalPart && decimalPart.length >= 2; }),  
   attractionCategory: yup
       .string()
-      .lowercase()
       .oneOf(['natural', 'urbana','Natural', 'Urbana'], 'Somente é possível classificar a atração turística como natural ou urbana')
-      .required('É importante informar se é uma Atração natural ou urbana!'),
-   adventureLevel: yup
+      .transform(value => value.toLowerCase()),
+         adventureLevel: yup
       .string()
       .oneOf(['radical', 'moderado', 'tranquilo', 'Radical', 'Moderado', 'Tranquilo'], 'Indique se é um passeio radical, moderado ou tranquilo.')
       .transform(value => value.toLowerCase()),
@@ -51,7 +47,6 @@ exports.filterAttractionSchema = yup.object().shape({
     rate: yup
       .mixed()
       .oneOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'Atribua uma avaliação de 1 a 10.')
-      .required('A sua avaliação é essencial!')
       .transform(value => String(value)),
   accessibility: yup
       .boolean('indique true se tiver acessibilidade.'),

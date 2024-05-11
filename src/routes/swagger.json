@@ -274,17 +274,31 @@
           {
             "name": "body",
             "in": "body",
+            "description": "Insira os dados cadastrais caso pretenda atualizá-los.",
             "schema": {
               "type": "object",
               "properties": {
-                "where": {
-                  "example": "any"
-                },
-                "paranoid": {
-                  "example": "any"
+                "phone": {
+                  "type": "string",
+                  "example": "(47) 912345634"
                 }
               }
             }
+          },
+          {
+            "name": "in",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "schema",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

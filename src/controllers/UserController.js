@@ -142,8 +142,22 @@ async reactivate (req,res) {
 #swagger.tags = ['Usuário - Login e Cadastro']
 #swagger.operationId = 'reativacao'
 #swagger.description = 'Reativação de Cadastro de Usuário',
-#swagger.parameters['cpf'] = { required: true, type: 'string', example: '055.887.232-52', description: 'Insira o número de cpf do usuário cujo cadastro se pretende reativar'},
- #swagger.responses[200] = { description: 'Cadastro reativado com sucesso!' }
+*/
+
+/*
+            #swagger.parameters['cpf'] = { required: true, type: 'string', example: '055.887.232-52', description: 'Insira o número de cpf do usuário cujo cadastro se pretende reativar'},
+
+            /*
+ #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Insira os dados cadastrais caso pretenda atualizá-los.',
+            schema: {
+                    phone: '(47) 912345634',
+            }}   
+*/
+
+/*
+#swagger.responses[200] = { description: 'Cadastro reativado com sucesso!' }
    #swagger.responses[404] = { description: 'Usuário excluído não encontrado.' }
    #swagger.responses[409] = { description: 'Usuário já está ativo.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }

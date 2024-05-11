@@ -4,7 +4,7 @@ exports.updateAttractionSchema = yup.object().shape({
   name: yup
       .string(),
   description: yup
-      .text()
+      .string()
       .min(15, 'Traga mais detalhes da atração turística')
       .max(600, 'O nome da atração deve ter no máximo 600 caracteres!'),
   visitDate: yup

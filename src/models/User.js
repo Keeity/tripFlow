@@ -66,5 +66,10 @@ const User = connection.define('users', {
 ,{paranoid: true}
 
 )
+User.addHook('beforeValidate', (user, options) => {
+  if (user.gender) {
+    user.gender = user.gender.toLowerCase();
+  }
+});
 
 module.exports = User

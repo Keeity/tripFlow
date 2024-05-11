@@ -5,7 +5,7 @@ const { checkRole } = require('../middlewares/role');
 const { attractionSchema } = require('../schemas/attraction.schema');
 const { updateAttractionSchema } = require('../schemas/updateAttraction.schema');
 const yup = require('../middlewares/yup');
-const { filterAttractionSchema } = require('../schemas/filterAttraction');
+const { filterAttractionSchema } = require('../schemas/filterAttractionSchema');
 
 const attractionRoutes = new Router; 
 

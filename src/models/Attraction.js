@@ -91,6 +91,18 @@ const Attraction = connection.define('attractions', {
 ,{paranoid: true}
 )
 
+Attraction.addHook('beforeValidate', (attraction, options) => {
+  if (attraction.adventureLevel) {
+    attraction.adventureLevel = attraction.adventureLevel.toLowerCase();
+  }
+  if (attraction.cost) {
+    attraction.cost = attraction.cost.toLowerCase();
+  }
+  if (attraction.attractionCategory) {
+    attraction.attractionCategory = attraction.attractionCategory.toLowerCase();
+  }
+});
+
 User.hasMany(Attraction, {foreignKey: 'user_id'}) 
 Attraction.belongsTo(User, {foreignKey: 'user_id'})
 

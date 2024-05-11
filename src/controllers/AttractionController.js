@@ -115,13 +115,20 @@ async list (req, res) {
 
 // //attraction - listar atrações cadastradas por filtro: name, cep, address, attractionCategory, visibility, adventureLevel, cost, rate, accessibility, selectiveWasteCollection, user_id. 
 async listByFilter (req, res) {
-  /* #swagger.tags = ['Atrações Turísticas - Gerais']
-   #swagger.description = 'Filtrar atrações turísticas gerais cadastradas - Usuário Premium e Administrador.'
+  /* 
+    #swagger.tags = ['Atrações Turísticas - Gerais']
+    #swagger.description = 'Filtrar atrações turísticas gerais cadastradas - Usuário Premium e Administrador.'
+*/
+
+  /* 
    #swagger.parameters['authorization'] = { 
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }  
-      #swagger.parameters['name'] = {
+*/
+
+/*
+    #swagger.parameters['name'] = {
     in: 'query',
     description: 'Insira o nome da atração turística, se quiser utilizar esse filtro. Ex: Mole',
     type: 'string',

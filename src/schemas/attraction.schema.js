@@ -37,9 +37,9 @@ exports.attractionSchema = yup.object().shape({
           return true;} const decimalPart = ('' + value).split('.')[1];return value >= -90 && value <= 90 && decimalPart && decimalPart.length >= 2; }),  
   attractionCategory: yup
       .string()
-      .lowercase()
-      .oneOf(['natural', 'urbana','Natural', 'Urbana'], 'Somente é possível classificar a atração turística como natural ou urbana')
-      .required('É importante informar se é uma Atração natural ou urbana!'),
+       .oneOf(['natural', 'urbana','Natural', 'Urbana'], 'Somente é possível classificar a atração turística como natural ou urbana')
+      .required('É importante informar se é uma Atração natural ou urbana!')
+      .transform(value => value.toLowerCase()),
    adventureLevel: yup
       .string()
       .oneOf(['radical', 'moderado', 'tranquilo', 'Radical', 'Moderado', 'Tranquilo'], 'Indique se é um passeio radical, moderado ou tranquilo.')
