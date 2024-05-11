@@ -16,7 +16,7 @@ module.exports = {
       },
       gender: {
         type: Sequelize.ENUM,
-        values: ['feminino', 'masculino', 'outro'],
+        values: ['Feminino', 'Masculino', 'Outro'],
         allowNull: true
           },
       birthDate: {

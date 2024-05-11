@@ -17,16 +17,17 @@ async register(req,res) {
     }
     #swagger.parameters['body'] = {
         in: 'body',
-        description: 'Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização',
+        description: 'Informações da atração turística para cadastro.',
         required: true,
         schema: {
-            name: "Santo Antônio de Lisboa",
-            description: "Santo Antônio de Lisboa é um bairro e praia de Florianópolis, Santa Catarina, muito conhecido pela gastronomia e pelo pôr do sol, que é um dos mais bonitos da ilha. É um dos bairros mais antigos e repleto de bons restaurantes e da história da imigração açoriana.",
+            name: "Trilha da Lagoinha do Leste",
+            description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
             visitDate: "2024-05-07",
-            cep: "88050-300",
-            attractionCategory: "urbana",
-            adventureLevel: "tranquilo",
-            cost: "gratuito",
+            cep: "12345-678",
+            addressNumber: 123,
+            attractionCategory: "natural",
+            adventureLevel: "Radical",
+            cost: "Gratuito",
             rate: "10",
             accessibility: false,
             selectiveWasteCollection: false
@@ -38,20 +39,16 @@ async register(req,res) {
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }
 */
      try {
-        const { name, description, visitDate, cep, referencePoint, addressNumber,attractionCategory, 
+        const { name, description, visitDate, cep, addressNumber,attractionCategory, 
                 adventureLevel, cost, rate, accessibility, selectiveWasteCollection } = req.body;
-                   
-                let geoCode = await geoCodeService.getGeoCode(cep, referencePoint);
-              
+                const geoCode = await geoCodeService.getGeoCode(cep, name);
+      
                 if(!geoCode)
                 {
                 return res.status(400).json({ error: 'Não foi possível obter os dados de localização para o CEP ou localidade fornecida. Tente inserir mais informação' });
                 } 
                      
                 const { address, latitude, longitude } = geoCode
-              //   if (address) {
-              //     address = address.substring(0, 254);
-              // }
                 const id = req.payload.sub
                 
                 const geoLocality = `https://www.google.com/maps/?q=${latitude},${longitude}`;
@@ -71,7 +68,6 @@ async register(req,res) {
           description,
           visitDate,
           cep,
-          referencePoint,
           address,
           addressNumber,
           latitude, 
@@ -90,7 +86,7 @@ async register(req,res) {
         res.status(201).json(attraction);
       } catch (error) {
         console.log(error.message);
-        res.status(500).json({ error: 'Não foi possível cadastrar a atração turística privada' });
+        res.status(500).json({ error: 'Não foi possível cadastrar o usuário' });
       }
     }
 

@@ -9,7 +9,7 @@ const User = connection.define('users', {
       },
       gender: {
         type: Sequelize.ENUM,
-        values: ['feminino', 'masculino', 'outro'],
+        values: ['Feminino', 'Masculino', 'Outro'],
         allowNull: true
           },
       birthDate: {

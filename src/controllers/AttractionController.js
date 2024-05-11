@@ -18,16 +18,15 @@ async register(req,res) {
     }
       #swagger.parameters['body'] = {
         in: 'body',
-        description: 'Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização',
+        description: 'Informações da atração turística.',
         required: true,
         schema: { 
-        name: "Trilha da Lagoinha do Leste - saindo de matadeiro",
+        name: "Trilha da Lagoinha do Leste",
        description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
        visitDate: "2024-05-07",
-       referencePoint: "Trilha da Lagoinha do Leste",
         attractionCategory: "natural",
-        adventureLevel: "radical",
-        cost: "gratuito",
+        adventureLevel: "Radical",
+        cost: "Gratuito",
         rate: "10",
         accessibility: false,
         selectiveWasteCollection: false
@@ -40,18 +39,17 @@ async register(req,res) {
 */
 
     try {
-        let { name, description, visitDate, cep, referencePoint, addressNumber,attractionCategory, 
+        let { name, description, visitDate, cep, addressNumber,attractionCategory, 
                 adventureLevel, cost, rate, accessibility, selectiveWasteCollection } = req.body;
-            
-        const geoCode = await geoCodeService.getGeoCode(cep, referencePoint);
+        
+        const geoCode = await geoCodeService.getGeoCode(cep, name);
         
   if(!geoCode)
  {
-  return res.status(400).json({ error: 'Não foi possível obter os dados de localização para o CEP ou referência fornecida. Tente inserir mais informação' });
+  return res.status(400).json({ error: 'Não foi possível obter os dados de localização para o CEP ou localidade fornecida. Tente inserir mais informação' });
  } 
 
- let { address, latitude, longitude } = geoCode
- 
+ const { address, latitude, longitude } = geoCode
   const id = req.payload.sub
 
   const geoLocality = `https://www.google.com/maps/?q=${latitude},${longitude}`;
@@ -69,7 +67,6 @@ async register(req,res) {
           description,
           visitDate,
           cep,
-          referencePoint,
           address,
           addressNumber,
           latitude, 
@@ -121,63 +118,14 @@ async listByFilter (req, res) {
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }  
-      #swagger.parameters['name'] = {
-    in: 'query',
-    description: 'Insira o nome da atração turística, se quiser utilizar esse filtro. Ex: Mole',
-    type: 'string',
-    example: 'Model'
-  }
-  #swagger.parameters['cep'] = {
-    in: 'query',
-    description: 'CEP da atração turística, se quiser utilizar esse filtro. Ex: 88062-400',
-    type: 'string'
-  }
-  #swagger.parameters['address'] = {
-    in: 'query',
-    description: 'Endereço da atração turística, se quiser utilizar esse filtro. Ex: Avenida das Rendeiras',
-    type: 'string'
-  }
-  #swagger.parameters['attractionCategory'] = {
-    in: 'query',
-    description: 'Categoria da atração turística, se quiser utilizar esse filtro. Ex: natural',
-    type: 'string'
-  }
-  #swagger.parameters['visibility'] = {
-    in: 'query',
-    description: 'Visibilidade da atração turística, se quiser utilizar esse filtro. Opções: public, private',
-    type: 'string'
-  }
-  #swagger.parameters['adventureLevel'] = {
-    in: 'query',
-    description: 'Nível de aventura da atração turística, se quiser utilizar esse filtro. Opções: tranquilo, moderado, radical',
-    type: 'string'
-  }
-  #swagger.parameters['cost'] = {
-    in: 'query',
-    description: 'Insira o custo da atração turística, se quiser utilizar esse filtro. Ex: gratuito, barato, mediano, caro',
-    type: 'string'
-  }
-  #swagger.parameters['rate'] = {
-    in: 'query',
-    description: 'Insira a classificação da atração turística (de 1 a 10), se quiser utilizar esse filtro.Ex: 10',
-    type: 'string'
-  }
-  #swagger.parameters['accessibility'] = {
-    in: 'query',
-    description: 'Insira true ou false para acessibilidade da atração turística, se quiser utilizar esse filtro. Opções: true ou false',
-    type: 'string'
-  }
-  #swagger.parameters['selectiveWasteCollection'] = {
-    in: 'query',
-    description: 'Insira true ou false para coleta seletiva de resíduos da atração turística, se quiser utilizar esse filtro. Opções: true ou false',
-    type: 'string'
-  }
-  #swagger.parameters['user_id'] = {
-    in: 'query',
-    description: 'Insira o ID do usuário, se quiser utilizar esse filtro. Ex: 2',
-    type: 'string'
-  }
-
+   #swagger.parameters['query'] = {
+        in: 'query',
+        description: 'Filtros para a busca de atrações turísticas publicadas.',
+        schema: {
+            attractionCategory: "natural",
+            accessibility: true
+        }
+   }
    #swagger.responses[200] = { description: 'Listadas as atrações turísticas pelos parâmetros fornecidos.' }
    #swagger.responses[404] = { description: 'Nenhuma atração turística encontrada com os parâmetros fornecidos.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }

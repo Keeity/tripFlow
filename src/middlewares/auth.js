@@ -1,5 +1,5 @@
 const { verify } = require('jsonwebtoken')
-const { secret } = require('../config/database.config') 
+const { secret } = require('../config/database.config')  //ali embaixo, ao invés de "process.env.SECRET_JWT", usa apenas secret
 
 async function auth(req, res, next){ 
 try {
@@ -16,7 +16,7 @@ if (authorization) {
 
 }  catch (error) {
     console.error('Erro no middleware auth:', error);
-    res.status(500).send('Erro de autenticação - Erro interno do servidor');
+    res.status(500).send('Erro interno do servidor');
     }
 
 }

@@ -5,7 +5,6 @@ const { checkRole } = require('../middlewares/role');
 const { attractionSchema } = require('../schemas/attraction.schema');
 const { updateAttractionSchema } = require('../schemas/updateAttraction.schema');
 const yup = require('../middlewares/yup');
-const { filterAttractionSchema } = require('../schemas/filterAttraction');
 
 const attractionRoutes = new Router; 
 
@@ -15,8 +14,8 @@ attractionRoutes.post('/',auth, checkRole('admin'), yup(attractionSchema), Attra
 //attraction - listar todas as atrações cadastradas
 attractionRoutes.get('/', auth, checkRole(['admin', 'premiumUser']), AttractionController.list)
 
-//attraction - filtrar atrações por parâmetros
-attractionRoutes.get('/filter', auth, checkRole(['admin', 'premiumUser']),yup(filterAttractionSchema), AttractionController.listByFilter)
+//attraction - listar atrações cadastradas em busca por nome
+attractionRoutes.get('/filter', auth, checkRole(['admin', 'premiumUser']), AttractionController.listByFilter)
 
 //attraction - listar atrações por id
 attractionRoutes.get('/:id', auth, checkRole(['admin', 'premiumUser']), AttractionController.listById)

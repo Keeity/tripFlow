@@ -7,7 +7,7 @@ const { updateAttractionSchema } = require('../schemas/updateAttraction.schema')
 const localRoutes = new Router; 
 
 //local - cadastro de atração privada
-localRoutes.post('/', auth, yup(attractionSchema), LocalController.register)
+localRoutes.post('/',auth, yup(attractionSchema), LocalController.register)
 
 //local - listar todas as atrações privadas criadas pelo usuario
 localRoutes.get('/', auth, LocalController.list)
@@ -20,5 +20,6 @@ localRoutes.put('/:id', auth, yup(updateAttractionSchema),LocalController.update
 
 //local - excluir a própria atração privada cadastrada
 localRoutes.delete('/:id', auth, LocalController.delete)  
+// apenas rotas criadas por si.
 
 module.exports = localRoutes 

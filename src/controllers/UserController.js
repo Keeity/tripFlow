@@ -73,7 +73,7 @@ async userRegister(req,res) {
             description: 'Insira os dados cadastrais do novo usuário.',
             schema: {
                     $name: "Mariana Hawangledt",
-                    $gender: "feminino",
+                    $gender: "Feminino",
                     $birthDate: "2015-08-10",
                     $cpf: "15156715121",
                     phone: "(48) 991234567",

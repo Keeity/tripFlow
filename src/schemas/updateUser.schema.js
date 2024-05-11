@@ -3,12 +3,10 @@ const yup = require('yup');
 exports.updateUserSchema = yup.object().shape({
   gender: yup
       .string()
-      .oneOf(['Feminino', 'Masculino', 'Outro', 'feminino', 'masculino', 'outro'],'Indique o gênero como sendo feminino, masculino ou, se não se encaixar nesses, escreva outro')
-      .transform(value => value.toLowerCase()),
+      .oneOf(['Feminino', 'Masculino', 'Outro'],'Indique o gênero como sendo feminino, masculino ou, se não se encaixar nesses, escreva outro'),
   birthDate: yup
       .string()
-      .matches(/^(?:\d{2}\/\d{2}\/\d{4}|\d{2}-\d{2}-\d{4}|\d{4}-\d{2}-\d{2})$/,'A data deve ter formato dd/mm/aaaa, dd-mm-aaaa ou aaaa-mm-dd.')
-      .transform(value => { if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) { const [day, month, year] = value.split('/');return `${year}-${month}-${day}` } else if (/^\d{2}-\d{2}-\d{4}$/.test(value)) {const [day, month, year] = value.split('-'); return `${year}-${month}-${day}`;} else {  return value; } }),
+      .matches(/^\d{4}-\d{2}-\d{2}$/, 'A data deve ter formato aaaa-mm-dd.'),
   cpf: yup
       .string()
       .matches(/^[0-9]{11}$|^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/, 'O CPF deve ter o formato nnnnnnnnnnn ou nnn.nnn.nnn-nn')

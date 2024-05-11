@@ -493,18 +493,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização",
+            "description": "Informações da atração turística para cadastro.",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Santo Antônio de Lisboa"
+                  "example": "Trilha da Lagoinha do Leste"
                 },
                 "description": {
                   "type": "string",
-                  "example": "Santo Antônio de Lisboa é um bairro e praia de Florianópolis, Santa Catarina, muito conhecido pela gastronomia e pelo pôr do sol, que é um dos mais bonitos da ilha. É um dos bairros mais antigos e repleto de bons restaurantes e da história da imigração açoriana."
+                  "example": "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes."
                 },
                 "visitDate": {
                   "type": "string",
@@ -512,15 +512,19 @@
                 },
                 "cep": {
                   "type": "string",
-                  "example": "88050-300"
+                  "example": "12345-678"
+                },
+                "addressNumber": {
+                  "type": "number",
+                  "example": 123
                 },
                 "attractionCategory": {
                   "type": "string",
-                  "example": "urbana"
+                  "example": "natural"
                 },
                 "adventureLevel": {
                   "type": "string",
-                  "example": "Tranquilo"
+                  "example": "Radical"
                 },
                 "cost": {
                   "type": "string",
@@ -733,14 +737,14 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização",
+            "description": "Informações da atração turística.",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Trilha da Lagoinha do Leste - saindo de matadeiro"
+                  "example": "Trilha da Lagoinha do Leste"
                 },
                 "description": {
                   "type": "string",
@@ -750,17 +754,13 @@
                   "type": "string",
                   "example": "2024-05-07"
                 },
-                "referencePoint": {
-                  "type": "string",
-                  "example": "Trilha da Lagoinha do Leste"
-                },
                 "attractionCategory": {
                   "type": "string",
                   "example": "natural"
                 },
                 "adventureLevel": {
                   "type": "string",
-                  "example": "radical"
+                  "example": "Radical"
                 },
                 "cost": {
                   "type": "string",
@@ -846,69 +846,76 @@
             "type": "string"
           },
           {
+            "name": "query",
+            "in": "query",
+            "description": "Filtros para a busca de atrações turísticas publicadas.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "attractionCategory": {
+                  "type": "string",
+                  "example": "natural"
+                },
+                "accessibility": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          {
             "name": "name",
             "in": "query",
-            "description": "Insira o nome da atração turística, se quiser utilizar esse filtro. Ex: Mole",
             "type": "string"
           },
           {
             "name": "cep",
             "in": "query",
-            "description": "CEP da atração turística, se quiser utilizar esse filtro. Ex: 88062-400",
             "type": "string"
           },
           {
             "name": "address",
             "in": "query",
-            "description": "Endereço da atração turística, se quiser utilizar esse filtro. Ex: Avenida das Rendeiras",
             "type": "string"
           },
           {
             "name": "attractionCategory",
             "in": "query",
-            "description": "Categoria da atração turística, se quiser utilizar esse filtro. Ex: natural",
             "type": "string"
           },
           {
             "name": "visibility",
             "in": "query",
-            "description": "Visibilidade da atração turística, se quiser utilizar esse filtro. Ex: public",
             "type": "string"
           },
           {
             "name": "adventureLevel",
             "in": "query",
-            "description": "Nível de aventura da atração turística, se quiser utilizar esse filtro. Ex: Tranquilo",
             "type": "string"
           },
           {
             "name": "cost",
             "in": "query",
-            "description": "Insira o custo da atração turística, se quiser utilizar esse filtro. Ex: Gratuito",
             "type": "string"
           },
           {
             "name": "rate",
             "in": "query",
-            "description": "Insira a classificação da atração turística (de 1 a 10), se quiser utilizar esse filtro.Ex: 10",
             "type": "string"
           },
           {
             "name": "accessibility",
             "in": "query",
-            "description": "Insira true ou false para acessibilidade da atração turística, se quiser utilizar esse filtro. Ex: true",
             "type": "string"
           },
           {
             "name": "selectiveWasteCollection",
             "in": "query",
-            "description": "Insira true ou false para coleta seletiva de resíduos da atração turística, se quiser utilizar esse filtro. Ex: false",
             "type": "string"
           },
           {
             "name": "user_id",
             "in": "query",
-            "description": "Insira o ID do usuário, se quiser utilizar esse filtro. Ex: 2",
             "type": "string"
           }
         ],

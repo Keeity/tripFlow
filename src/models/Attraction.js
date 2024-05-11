@@ -9,7 +9,7 @@ const Attraction = connection.define('attractions', {
       },
       description: {
        allowNull: false,
-       type: Sequelize.TEXT
+       type: Sequelize.STRING
       },
       visitDate: {
        allowNull: false,
@@ -19,9 +19,6 @@ const Attraction = connection.define('attractions', {
        type: Sequelize.STRING,
        allowNull: true,
         },
-      referencePoint: {
-       allowNull: true,
-       type: Sequelize.STRING      },
      address: {
        type: Sequelize.STRING,
        allowNull: false,
@@ -55,12 +52,12 @@ const Attraction = connection.define('attractions', {
             },
       adventureLevel: {
            type: Sequelize.ENUM,
-           values: ['radical', 'moderado', 'tranquilo'],
+           values: ['Radical', 'Moderado', 'Tranquilo'],
            allowNull: true
              },
       cost: {
            type: Sequelize.ENUM,
-           values: ['gratuito', 'barato', 'mediano', 'caro'],
+           values: ['Gratuito', 'Barato', 'Mediano', 'Caro'],
            allowNull: true
              },
        rate: {

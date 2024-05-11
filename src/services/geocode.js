@@ -1,14 +1,10 @@
 const axios = require('axios');
 
-exports.getGeoCode = async (cep, referencePoint) => {
+exports.getGeoCode = async (cep, name) => {
     try {
-        let query = cep ? `postalcode=${cep}` : `q=${referencePoint.toLowerCase()}`;
+        let query = cep ? `postalcode=${cep}` : `q=${name.toLowerCase()}`;
         const response = await axios.get(`https://nominatim.openstreetmap.org/search?${query}&format=json`);
       if (response.data && response.data[0]) {
-        let address = response.data[0].display_name;
-       
-        address = address.length > 254 ? address.substring(0, 254) : address; // Limita o endereço a 254 caracteres
-
         return {
           address: response.data[0].display_name,
           latitude: response.data[0].lat,
