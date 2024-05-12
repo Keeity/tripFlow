@@ -34,16 +34,13 @@ exports.filterAttractionSchema = yup.object().shape({
           return true;} const decimalPart = ('' + value).split('.')[1];return value >= -90 && value <= 90 && decimalPart && decimalPart.length >= 2; }),  
   attractionCategory: yup
       .string()
-      .oneOf(['natural', 'urbana','Natural', 'Urbana'], 'Somente é possível classificar a atração turística como natural ou urbana')
-      .transform(value => value.toLowerCase()),
-         adventureLevel: yup
+      .oneOf(['natural', 'urbana','Natural', 'Urbana'], 'Somente é possível classificar a atração turística como natural ou urbana'),
+   adventureLevel: yup
       .string()
-      .oneOf(['radical', 'moderado', 'tranquilo', 'Radical', 'Moderado', 'Tranquilo'], 'Indique se é um passeio radical, moderado ou tranquilo.')
-      .transform(value => value.toLowerCase()),
+      .oneOf(['radical', 'moderado', 'tranquilo'], 'Indique se é um passeio radical, moderado ou tranquilo.'),
      cost: yup
       .string()
-      .oneOf(['gratuito', 'barato', 'mediano', 'caro','Gratuito', 'Barato', 'Mediano', 'Caro'], 'Indique se é um passeio gratuito ou, se pago, se é barato, mediano ou caro')
-      .transform(value => value.toLowerCase()),
+      .oneOf(['gratuito', 'barato', 'mediano', 'caro','Gratuito', 'Barato', 'Mediano', 'Caro'], 'Indique se é um passeio gratuito ou, se pago, se é barato, mediano ou caro'),
     rate: yup
       .mixed()
       .oneOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'Atribua uma avaliação de 1 a 10.')

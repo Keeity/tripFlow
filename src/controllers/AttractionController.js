@@ -13,7 +13,8 @@ async register(req,res) {
 /* #swagger.tags = ['Atrações Turísticas - Gerais']
    #swagger.description = 'Cadastrar uma nova atração turística pública - Apenas Administrador.'
   #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
       #swagger.parameters['body'] = {
@@ -21,14 +22,14 @@ async register(req,res) {
         description: 'Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização',
         required: true,
         schema: { 
-        name: "Trilha da Lagoinha do Leste - saindo de matadeiro",
-       description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
-       visitDate: "2024-05-07",
+        $name: "Trilha da Lagoinha do Leste - saindo de matadeiro",
+       $description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
+       $visitDate: "07/05/2024",
        referencePoint: "Trilha da Lagoinha do Leste",
-        attractionCategory: "natural",
+        $attractionCategory: "natural",
         adventureLevel: "radical",
         cost: "gratuito",
-        rate: "10",
+        $rate: "10",
         accessibility: false,
         selectiveWasteCollection: false
         }
@@ -97,7 +98,8 @@ async list (req, res) {
   /* #swagger.tags = ['Atrações Turísticas - Gerais']
    #swagger.description = 'Visualizar todas as atrações turísticas cadastradas - Usuário Premium e Administrador.'
   #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
       #swagger.responses[200] = { description: 'Listadas todas as atrações turísticas cadastradas.' }
@@ -122,6 +124,7 @@ async listByFilter (req, res) {
 
   /* 
    #swagger.parameters['authorization'] = { 
+       required: true,
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }  
@@ -146,7 +149,7 @@ async listByFilter (req, res) {
   }
   #swagger.parameters['attractionCategory'] = {
     in: 'query',
-    description: 'Categoria da atração turística, se quiser utilizar esse filtro. Ex: natural',
+    description: 'Categoria da atração turística, se quiser utilizar esse filtro. Opções: natural, urbana',
     type: 'string'
   }
   #swagger.parameters['visibility'] = {
@@ -202,16 +205,16 @@ async listByFilter (req, res) {
         params.address = { [Op.iLike]: '%' + req.query.address + '%' };
       }
       if (req.query.attractionCategory) {
-        params.attractionCategory = req.query.attractionCategory;
+        params.attractionCategory = req.query.attractionCategory.toLowerCase();
       }
       if (req.query.visibility) {
         params.visibility = req.query.visibility;
       }
-      if (req.query.adventureLevel) {
-        params.adventureLevel = req.query.adventureLevel;
-      }
-      if (req.query.cost) {
-        params.cost = req.query.cost;
+       if (req.query.adventureLevel) {
+          params.adventureLevel = req.query.adventureLevel.toLowerCase();
+        }
+          if (req.query.cost) {
+        params.cost = req.query.cost.toLowerCase();
       }
       if (req.query.rate) {
         params.rate = req.query.rate;
@@ -246,12 +249,14 @@ async listById (req,res) {
 /* #swagger.tags = ['Atrações Turísticas - Gerais']
    #swagger.description = 'Encontrar uma atração turística geral pelo ID - Usuário Premium e Administrador.'
    #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
      #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística.',
+        required: true,
+      description: 'Informe o ID da atração turística. Ex: 3',
         required: true
    }
    #swagger.responses[200] = { description: 'Detalhes da atração turística encontrada.' }
@@ -279,19 +284,22 @@ async update(req,res) {
   /* #swagger.tags = ['Atrações Turísticas - Gerais']
    #swagger.description = 'Alterar informações de uma atração turística geral - Apenas Administrador.'
     #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística a ser alterada.',
+         required: true,
+         description: 'Informe o ID da atração turística a ser alterada. Ex: 1',
         required: true
    }
    #swagger.parameters['body'] = {
         in: 'body',
+         required: true,
         description: 'Dados para atualização da atração turística.',
         schema: {
-        description: "Uma das praias mais bonitas do sul, excelente para a prática de surf. Quando o vento está noroeste ou oeste, fica uma condição ótima para o esporte. É bastante extensa."
+        description: "Uma das praias mais bonitas do leste, excelente para a prática de surf. Quando o vento está noroeste ou oeste, fica uma condição ótima para o esporte. É bastante extensa."
         }
    }
    #swagger.responses[200] = { description: 'Atração turística alterada com sucesso.' }
@@ -319,12 +327,14 @@ async delete(req,res) {
 /* #swagger.tags = ['Atrações Turísticas - Gerais']
    #swagger.description = 'Excluir uma atração turística Geral - Apenas Administrador.'
     #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística a ser excluída.',
+         required: true,
+         description: 'Informe o ID da atração turística a ser excluída. Ex: 6',
         required: true
    }
    #swagger.responses[200] = { description: 'Atração Turística excluída com sucesso.' }

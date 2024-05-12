@@ -12,7 +12,8 @@ async register(req,res) {
 /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
    #swagger.description = 'Cadastrar uma nova atração turística privada.'
     #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['body'] = {
@@ -20,14 +21,14 @@ async register(req,res) {
         description: 'Insira as informações da atração turística. Poderá ser fornecido o CEP ou Localidade para busca da geolocalização',
         required: true,
         schema: {
-            name: "Santo Antônio de Lisboa",
-            description: "Santo Antônio de Lisboa é um bairro e praia de Florianópolis, Santa Catarina, muito conhecido pela gastronomia e pelo pôr do sol, que é um dos mais bonitos da ilha. É um dos bairros mais antigos e repleto de bons restaurantes e da história da imigração açoriana.",
-            visitDate: "2024-05-07",
+            $name: "Santo Antônio de Lisboa",
+            $description: "Santo Antônio de Lisboa é um bairro e praia de Florianópolis, Santa Catarina, muito conhecido pela gastronomia e pelo pôr do sol, que é um dos mais bonitos da ilha. É um dos bairros mais antigos e repleto de bons restaurantes e da história da imigração açoriana.",
+            $visitDate: "2024-05-07",
             cep: "88050-300",
-            attractionCategory: "urbana",
+            $attractionCategory: "urbana",
             adventureLevel: "tranquilo",
             cost: "gratuito",
-            rate: "10",
+            $rate: "10",
             accessibility: false,
             selectiveWasteCollection: false
         }
@@ -99,7 +100,8 @@ async list (req, res) {
   /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
    #swagger.description = 'Listar todas as atrações turísticas privadas criadas pelo usuário.'
   #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
       #swagger.responses[200] = { description: 'Atrações turísticas cadastradas pelo usuário.' }
@@ -131,11 +133,13 @@ async listById (req,res) {
    #swagger.description = 'Filtrar uma atração turística privada pelo ID, se criada pelo usuário.'
     #swagger.parameters['authorization'] = { 
        in: 'header',
-       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+       required: true,
+        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística.',
+         required: true,
+         description: 'Informe o ID da atração turística para visualizá-la. Ex: 4',
         required: true
    }
    #swagger.responses[200] = { description: 'Detalhes da atração turística.' }
@@ -168,19 +172,21 @@ async update (req,res) {
    #swagger.description = 'Alterar informações da própria atração turística cadastrada pelo usuário.'
     #swagger.parameters['authorization'] = { 
        in: 'header',
-       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+        required: true,
+        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística a ser alterada.',
+        required: true,
+        description: '/informe o ID da atração turística a ser alterada. Ex: 7',
         required: true
    }
    #swagger.parameters['body'] = {
         in: 'body',
-        description: 'Dados para atualização da atração turística.',
+         required: true,
+         description: 'Dados para atualização da atração turística.',
         schema: {
-            description: "Existem duas trilhas que levam à lagoinha do Leste, sendo a mais longa (cerca de 2h), que sai de matadeiro, a mais bonita. A praia é linda, e a trilha passa por passagens deslumbrantes.",
-            accessibility: false
+              cost: "caro",
         }
    }
    #swagger.responses[200] = { description: 'Alteração realizada com sucesso.' }
@@ -234,12 +240,14 @@ async delete(req,res) {
   /* #swagger.tags = ['* Atrações Turísticas - Locais/ Privadas']
    #swagger.description = 'Excluir atração turística privada cadastrada pelo próprio usuário.'
     #swagger.parameters['authorization'] = { 
-       in: 'header',
+        required: true,
+        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
     #swagger.parameters['id'] = {
         in: 'path',
-        description: 'ID da atração turística a ser excluída.',
+         required: true,
+         description: 'Informe o ID da atração turística a ser excluída. Ex: 7',
         required: true
    }
    #swagger.responses[200] = { description: 'Atração turística excluída com sucesso.' }

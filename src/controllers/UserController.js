@@ -19,6 +19,7 @@ async login(req,res) {
   #swagger.description = 'Login e Autenticação do Usuário'
  #swagger.parameters['Login'] = {
             in: 'body',
+            required: true,
             description: 'Faça login, com email e senha, para se autenticar e retornar um token JWT.',
            schema: {
                    $email: "rawan@example.com",
@@ -70,6 +71,7 @@ async userRegister(req,res) {
   #swagger.description = 'Cadastro de novo Usuário - user'
  #swagger.parameters['Cadastro'] = {
             in: 'body',
+            required: true,
             description: 'Insira os dados cadastrais do novo usuário.',
             schema: {
                     $name: "Mariana Hawangledt",
@@ -136,7 +138,7 @@ async userRegister(req,res) {
       }
     }
 
-//usuario/reactivate - reativar cadastro
+//usuario/reactivate - reativar cadastro e atualizar dados
 async reactivate (req,res) { 
   /*
 #swagger.tags = ['Usuário - Login e Cadastro']
@@ -145,16 +147,7 @@ async reactivate (req,res) {
 */
 
 /*
-            #swagger.parameters['cpf'] = { required: true, type: 'string', example: '055.887.232-52', description: 'Insira o número de cpf do usuário cujo cadastro se pretende reativar'},
-
-            /*
- #swagger.parameters['body'] = {
-            in: 'body',
-            description: 'Insira os dados cadastrais caso pretenda atualizá-los.',
-            schema: {
-                    phone: '(47) 912345634',
-            }}   
-*/
+            #swagger.parameters['cpf'] = { required: true, type: 'string', description: 'Insira o número de cpf do usuário cujo cadastro se pretende reativar. Ex: 121.121.121-00'},
 
 /*
 #swagger.responses[200] = { description: 'Cadastro reativado com sucesso!' }
@@ -167,7 +160,7 @@ async reactivate (req,res) {
 try {
  const { cpf } = req.query
   const user = await User.findOne({ where: {cpf}, paranoid: false})
-  const {phone, password, email, cep, address, addressNumber, addressComplement} = req.body
+
   const deletedAt = user.deletedAt
 if(!user){
   return res.status(404).json({error: 'Não foi encontrado um usuário excluído com esse cpf. Faça seu cadastro ou login'})
@@ -178,18 +171,7 @@ user.setDataValue('deletedAt', null)
 } else {
 return res.status(409).json({error:`Usuário está ativo. Faça seu login`})}
 
- if (password) {
-   const hashPassword = await hash(password, 8);
-   user.password = hashPassword;
- }
-
-phone && user.setDataValue('phone', phone);
-email && user.setDataValue('email', email);
-cep && user.setDataValue('cep', cep);
-address && user.setDataValue('address', address);
-addressNumber && user.setDataValue('addressNumber', addressNumber);
-addressComplement && user.setDataValue('addressComplement', addressComplement);
-
+ 
 await user.save();
 console.log("Cadastro reativado com sucesso!")
 res.status(200).json({message: "Cadastro reativado com sucesso!"})
@@ -208,6 +190,7 @@ async viewRegister (req, res) {
   #swagger.description = 'Visualizar o próprio cadastro'
    #swagger.parameters['authorization'] = { 
        in: 'header',
+       required: true,
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
        #swagger.responses[200] = { description: 'Dados do cadastro do usuário.' }
@@ -232,16 +215,19 @@ async userUpdate (req,res) {
   #swagger.tags = ['* Usuário - Acesso ao próprio Cadastro']
    #swagger.operationId = 'Alterar próprio cadastro'
   #swagger.description = 'Alterar seus dados cadastrais'
- #swagger.parameters['Altera Cadastro'] = {
+   #swagger.parameters['authorization'] = { 
+      required: true,
+      in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }
+     #swagger.parameters['Altera Cadastro'] = {
             in: 'body',
             description: 'Insira os dados cadastrais que serão alterados.',
+            required: true,
             schema: {
                     phone: '(47) 912345634',
             }}   
-   #swagger.parameters['authorization'] = { 
-       in: 'header',
-       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
-    }
+
       #swagger.responses[200] = { description: 'Alteração realizada com sucesso!' }
    #swagger.responses[404] = { description: 'Usuário não encontrado.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }
@@ -285,6 +271,7 @@ async userDelete(req,res) {
    #swagger.operationId = 'Excluir próprio cadastro'
   #swagger.description = 'Excluir o próprio Cadastro'
    #swagger.parameters['authorization'] = { 
+       required: true,
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }  
@@ -314,6 +301,11 @@ async usersList (req, res) {
   #swagger.tags = ['Usuário - Acesso ao administrador']
  #swagger.operationId = 'Listar usuarios'
  #swagger.description = 'Listar todos os usuários - Acesso exclusivo Administrador'
+   #swagger.parameters['authorization'] = { 
+       required: true,
+       in: 'header',
+       description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
+    }  
     #swagger.responses[200] = { description: 'Lista de todos os usuários.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.'  }
  */ 
@@ -334,11 +326,12 @@ async listUsersById (req,res) {
   #swagger.tags = ['Usuário - Acesso ao administrador']
    #swagger.operationId = 'Filtrar cadastro'
   #swagger.description = 'Filtrar usuário por ID - Acesso exclusivo Administrador'
-  #swagger.parameters['authorization'] = { 
+   #swagger.parameters['authorization'] = { 
+       required: true,
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
-    }
-    #swagger.parameters['id'] = { description: 'Insira o id do usuário a ser pesquisado.' }
+    }  
+    #swagger.parameters['id'] = { required: true, description: 'Insira o id do usuário a ser pesquisado. Ex: 2' }
      #swagger.responses[200] = { description: 'Dados do usuário.' }
    #swagger.responses[404] = { description: 'Usuário não encontrado.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }
@@ -364,14 +357,16 @@ async update(req,res) {
   #swagger.tags = ['Usuário - Acesso ao administrador']
    #swagger.operationId = 'Altera cadastro'
   #swagger.description = 'Altera qualquer cadastro, inclusive tipo de usuário - Acesso exclusivo Administrador'
- #swagger.parameters['authorization'] = { 
+  #swagger.parameters['authorization'] = { 
+       required: true,
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
-    }
-      #swagger.parameters['id'] = { description: 'Insira o id do usuário para alteração de cadastro.', example: '6' }
+    }  
+      #swagger.parameters['id'] = {  required: true, description: 'Insira o id do usuário para alteração de cadastro.Ex: 2'}
  #swagger.parameters['Cadastro'] = {
             in: 'body',
-            description: 'Insira os dados cadastrais do usuário.',
+            required: true,
+             description: 'Insira os dados cadastrais do usuário.',
             schema: {
                     $name: 'Mariana L. Hawangledt',
             }}   
@@ -407,7 +402,7 @@ async usersDelete(req,res) {
        in: 'header',
        description: 'Faça login para executar essa operação e insira o token gerado no campo abaixo:' 
     }
-      #swagger.parameters['id'] = { description: 'Insira o id do usuário que se pretende excluir.', example: '6' }
+      #swagger.parameters['id'] = {  required: true, description: 'Insira o id do usuário que se pretende excluir.Ex: 6'}
   #swagger.responses[200] = { description: 'Usuário excluído com sucesso.' }
    #swagger.responses[404] = { description: 'Usuário não encontrado ou possui atrações cadastradas.' }
    #swagger.responses[500] = { description: 'Erro interno do servidor.' }
