@@ -136,12 +136,9 @@ O projeto foi estruturado para que os usuários, a depender do seu tipo de permi
        * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
        * DELETE: `http://localhost:3000/attraction/:id `
 
-
 ## Projeto Visual
 
-![Trip Flow] (https://drive.google.com/file/d/1vKhJQvyXumWsr4uXM7ekOE_GNEAEzd8P/view?usp=drive_link)
-
-<img scr:"src\img\image.png" alt="Trip Flow"> 
+![Trip Flow - projeto](image.png)
 
 ## Configurar o repositório:
 
