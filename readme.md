@@ -43,97 +43,76 @@ O projeto foi estruturado para que os usuários, a depender do seu tipo de permi
 
   ### Rotas Relacionadas aos Usuários:
 
-   1. Rota para Login  (`Obrigatória`):
-      * Independe de autenticação prévia.
+   1. Rota para Login  (`OBRIGATÓRIA`):
       * POST: `http://localhost:3000/user/login` 
 
-   2. Rota para Cadastro de usuário (`Obrigatória`) :
-      * Independe de autenticação prévia.
+   2. Rota para Cadastro de usuário (`OBRIGATÓRIA`):
       * POST: `http://localhost:3000/user` 
 
-   3. Rota para Alteração do próprio Cadastro (`Opcional`) :
-      * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   3. Rota para Alteração do próprio Cadastro (`OPCIONAL`):
       * PUT: `http://localhost:3000/user` 
 
-   4. Rota para Visualização do próprio Cadastro (`Opcional`) :
-      * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   4. Rota para Visualização do próprio Cadastro (`OPCIONAL`):
       * GET: `http://localhost:3000/user`
 
-   5. Rota para Alteração do próprio Cadastro (`Opcional`) :
-       * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   5. Rota para Alteração do próprio Cadastro (`OPCIONAL`):
        * PUT: `http://localhost:3000/user`
 
-   6. Rota para Exclusão do próprio Cadastro (`Opcional`) :
-       * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   6. Rota para Exclusão do próprio Cadastro (`OPCIONAL`):
        * DELETE: `http://localhost:3000/user`
 
-   7. Rota para Reativação de Cadastro de usuário (`Opcional`) :
-       * Independe de autenticação prévia.
+   7. Rota para Reativação de Cadastro de usuário (`OPCIONAL`):
        * PUT: `http://localhost:3000/user/reactivate` 
 
-   8. Rota para Listar todos os Usuários Cadastrados (`Opcional`) :
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
+   8. Rota para Listar todos os Usuários Cadastrados (`OPCIONAL`):
        * GET: `http://localhost:3000/user/admin`
 
-   9. Rota para Listar qualquer usuário por ID (`Opcional`) :
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
+   9. Rota para Listar qualquer usuário por ID (`OPCIONAL`):
        * GET: `http://localhost:3000/user/admin/:id`
 
-   10. Rota para alterar qualquer usuário por ID (`Opcional`) :
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
+   10. Rota para alterar qualquer usuário por ID (`OPCIONAL`):
        * PUT: `http://localhost:3000/user/admin/:id`
 
-   11. Rota para excluir qualquer usuário por ID (`Opcional`) :
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
+   11. Rota para excluir qualquer usuário por ID (`OPCIONAL`):
        * DELETE: `http://localhost:3000/user/admin/:id`
 
 
   ### Rotas Relacionadas às Atrações Privadas dos Usuários:
 
-   1. Rota para Cadastro de nova Atração Turística Privada (`Obrigatória`) :
-      * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   1. Rota para Cadastro de nova Atração Turística Privada (`OBRIGATÓRIA`):
      * POST: `http://localhost:3000/local` 
 
-   2. Rota para Listar os locais cadastrados pelo próprio usuário (`Obrigatória`) :
-      * Depende de autenticação prévia. Acesso a qualquer tipo de usuário aos seus próprios locais.
+   2. Rota para Listar os locais cadastrados pelo próprio usuário (`OBRIGATÓRIA`):
       * GET: `http://localhost:3000/local`
 
-   3. Rota para Listar atração específica cadastrada pelo próprio usuário (`Obrigatória`) :
-       * Depende de autenticação prévia. Acesso a qualquer tipo de usuário aos seus próprios locais.
+   3. Rota para Listar atração específica cadastrada pelo próprio usuário (`OBRIGATÓRIA`):
        * GET: `http://localhost:3000/local/:id`
 
-   4. Rota para Alteração de atração específica cadastrada pelo próprio usuário (`Obrigatória`):
-       * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+   4. Rota para Alteração de atração específica cadastrada pelo próprio usuário (`OBRIGATÓRIA`):
        * PUT: `http://localhost:3000/local/:id `
-   5. Rota para Exclusão de atração específica cadastrada pelo próprio usuário (`Obrigatória`):
-       * Depende de autenticação prévia. Acesso a qualquer tipo de usuário.
+
+   5. Rota para Exclusão de atração específica cadastrada pelo próprio usuário (`OBRIGATÓRIA`):
        * DELETE: `http://localhost:3000/local/:id `
 
 
   ### Rotas Relacionadas às Atrações Gerais – acesso restrito: 
 
-   1. Rota para Cadastro de nova Atração Turística Geral (`Opcional`) :
-      * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
+   1. Rota para Cadastro de nova Atração Turística Geral (`OPCIONAL`):
      * POST: `http://localhost:3000/attraction` 
 
-   2. Rota para Listar todos as atrações turísticas cadastradas (`Opcional`) :
-      * Depende de autenticação prévia. Acesso apenas ao `admin` e `premiumUser`.
+   2. Rota para Listar todos as atrações turísticas cadastradas (`OPCIONAL`):
       * GET: `http://localhost:3000/attraction`
 
-   3. Rota para Listar atração turística específica (`Opcional`) :
-       * Depende de autenticação prévia. Acesso apenas ao `admin` e `premiumUser`.
+   3. Rota para Listar atração turística específica (`OPCIONAL`):
        * GET: `http://localhost:3000/attraction/:id`
 
-   4. Rota para Filtrar atração turística por parâmetro (`Opcional`) :
-       * Depende de autenticação prévia. Acesso apenas ao `admin` e `premiumUser`.
+   4. Rota para Filtrar atração turística por parâmetro (`OPCIONAL`):
        * GET: `http://localhost:3000/filter`
 
    5. Rota para Alteração de qualquer atração turística (`Opcional`):
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
        * PUT: `http://localhost:3000/attraction/:id `
 
    6. Rota para Exclusão de qualquer atração turística (`Opcional`):
-       * Depende de autenticação prévia. Acesso exclusivo ao `admin`.
        * DELETE: `http://localhost:3000/attraction/:id `
 
 ## Projeto Visual

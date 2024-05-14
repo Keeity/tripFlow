@@ -3,7 +3,7 @@ module.exports = (schema) => async (req, res, next) => {
     await schema.validate(req.body);
     next();
   } catch (error) {
-    console.error(error);
+     console.error(error);
     res.status(400).send({ error: error.errors });
   }
 };

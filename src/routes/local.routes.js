@@ -1,10 +1,10 @@
-const {Router, query} = require('express');
+const { Router, query } = require('express');
 const { auth } = require('../middlewares/auth');
 const LocalController = require('../controllers/LocalController');
 const { attractionSchema } = require('../schemas/attraction.schema');
 const yup = require('../middlewares/yup');
 const { updateAttractionSchema } = require('../schemas/updateAttraction.schema');
-const localRoutes = new Router; 
+const localRoutes = new Router;
 
 //local - cadastro de atração privada
 localRoutes.post('/', auth, yup(attractionSchema), LocalController.register)
@@ -16,9 +16,9 @@ localRoutes.get('/', auth, LocalController.list)
 localRoutes.get('/:id', auth, LocalController.listById)
 
 //local - alterar a própria atração cadastrada
-localRoutes.put('/:id', auth, yup(updateAttractionSchema),LocalController.update)
+localRoutes.put('/:id', auth, yup(updateAttractionSchema), LocalController.update)
 
 //local - excluir a própria atração privada cadastrada
-localRoutes.delete('/:id', auth, LocalController.delete)  
+localRoutes.delete('/:id', auth, LocalController.delete)
 
 module.exports = localRoutes 

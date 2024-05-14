@@ -2,11 +2,11 @@
 
 //const { queryInterface, Sequelize } = require("sequelize");
 
-  module.exports = {
-up: async (queryInterface, Sequelize) => {
-await queryInterface.bulkInsert('attractions',[
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert('attractions', [
 
-    {
+      {
         name: 'Praia da Joaquina',
         description: 'Conhecida pelas suas dunas e ondas propícias para o surf, tendo uma infraestrutura boa para ficar com a família.',
         visitDate: new Date('2024-01-15'),
@@ -105,9 +105,9 @@ await queryInterface.bulkInsert('attractions',[
         user_id: 5,
         createdAt: new Date('2024-05-05'),
         updatedAt: new Date('2024-05-05')
-        },
-       {
-         name: 'Ponte Hercílio Luz',
+      },
+      {
+        name: 'Ponte Hercílio Luz',
         description: 'A Ponte Hercílio Luz é uma ponte pênsil localizada em Florianópolis, no estado brasileiro de Santa Catarina, sendo a mais antiga das três que ligam as partes insular e continental da capital catarinense. É a maior ponte suspensa do Brasil.',
         visitDate: new Date('2024-01-04'),
         cep: '88010-400',
@@ -126,21 +126,21 @@ await queryInterface.bulkInsert('attractions',[
         createdAt: new Date('2024-05-05'),
         updatedAt: new Date('2024-05-05')
       }
-])
+    ])
 
-},
+  },
 
 
-down: async (queryInterface, Sequelize) => {
-await queryInterface.bulkDelete('attractions',{
-   name: [
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('attractions', {
+      name: [
         'Praia da Joaquina',
         'Lagoa da Conceição',
         'Praia Mole',
         'Barra da Lagoa',
         'Projeto Tamar',
         'Ponte Hercílio Luz'
-    ]
-})
-}
+      ]
+    })
+  }
 }
