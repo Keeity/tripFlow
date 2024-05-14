@@ -1,4 +1,4 @@
-# TRIP FLOW - Plataforma de Turismo Sustentável
+# TRIP FLOW
 
 ## Sobre a construção da API
 
@@ -161,13 +161,16 @@ O projeto foi estruturado para que os usuários, a depender do seu tipo de permi
         * PORT_API: `porta na qual a API estará rodando`. Exemplo: `3000`.
         * SECRET_WJT=`palavra chave escolhida para utilizar o jwt`. Exemplo: `senha`
 
-## Criar tabelas e Rodar o repositório:
+## Rodar o repositório:
 
    ### Para começar a utilizar, é necessário instalar as dependencias (node_modules):
    1. `npm install`
    2. Se for em ambiente local: `npm install --dev`
 
-## Criar banco de dados e rodar migrations:
+   ### Para rodar o repositório em ambiente local
+   1. `npm run start`
+
+## Interagindo com banco de dados com migrations:
 
    ### Criar o banco de dados 
    1. Crie o banco de dados `viagem365`. 
