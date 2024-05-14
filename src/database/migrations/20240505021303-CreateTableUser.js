@@ -2,15 +2,15 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('users', {
-       id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-       },
-       name: {
+      },
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.ENUM,
         values: ['feminino', 'masculino', 'outro'],
         allowNull: true
-          },
+      },
       birthDate: {
         allowNull: false,
         type: Sequelize.DATE
@@ -31,41 +31,41 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-        email: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
-             },
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
-         },
+      },
       cep: {
         type: Sequelize.STRING,
         allowNull: false,
-         },
+      },
       address: {
         type: Sequelize.STRING,
         allowNull: false,
-         },   
+      },
       addressNumber: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-           }, 
-       addressComplement: {
-            type: Sequelize.STRING,
-            allowNull: true,
-             }, 
-       role: {
-           type: Sequelize.ENUM,
-            values: ['admin', 'user', 'premiumUser'],
-            allowNull: false,
-           defaultValue: 'user'
-        },
-        createdAt: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      addressComplement: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      role: {
+        type: Sequelize.ENUM,
+        values: ['admin', 'user', 'premiumUser'],
+        allowNull: false,
+        defaultValue: 'user'
+      },
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-       updatedAt: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
@@ -73,10 +73,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true
       }
-      });
+    });
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
   }
 };

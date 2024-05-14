@@ -8,16 +8,16 @@ const doc = {
         description: "Documentação da Trip Flow"
     },
     host: "localhost:3000",
-    security: [{"apiKeyAuth": []}],
+    security: [{ "apiKeyAuth": [] }],
     securityDefinitions: {
         apiKeyAuth: {
             type: 'apiKey',
-            in: 'header', 
-            name: 'authorization', 
+            in: 'header',
+            name: 'authorization',
             description: 'Token de Autenticação'
         }
     }
-  
+
 };
 
 const outputFile = './src/routes/swagger.json';
